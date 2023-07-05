@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useErrorState, usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
 
 export const TogglePlay = (props : any) => {
 
     const webPlaybackSDKReady = useWebPlaybackSDKReady();
-
     const player = useSpotifyPlayer();
-
-
-    const [deviceName, setDeviceName] = useState("Spotify Device");
-
-    const SPOTIFY_URI = "spotify:track:7xGfFoTpQ2E7fRF5lN10tr";
-
-
     const playbackState = usePlaybackState(true, 100);
     const playerDevice = usePlayerDevice();
     const errorState = useErrorState();

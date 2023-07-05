@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { WebPlayback } from "../SpotifyPlayer/WebPlayback";
-import { LoginWidget } from "./LoginPage";
+import { LoginPage } from "./LoginPage";
 
-export const LoginPage = () => {
+export const LandingPage = () => {
 
     const [token, setToken] = useState('');
 
@@ -18,8 +18,8 @@ export const LoginPage = () => {
     }, [])
 
     return (
-        <div>
-             { (token === '') ? <LoginWidget/> : <WebPlayback token={token} getOAuthToken={getOAuthToken} /> }
+        <div className="bg-[#111320] h-screen w-screen">
+             { (token === '') ? <LoginPage /> : <WebPlayback token={token} getOAuthToken={getOAuthToken} /> }
         </div>
     )
 
