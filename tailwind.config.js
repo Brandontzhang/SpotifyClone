@@ -6,6 +6,14 @@ export default {
   theme: {
     colors : {
       primary: "var(--primary-color)",
+      secondary : "var(--secondary-color)",
+
+      background : "var(--background-color)",
+      backgroundLite : "var(--background-color-lite)",
+      backgroundDark : "var(--background-color-dark)",
+
+      text : "var(--text-color)",
+      highlight : "var(--highlight-color)"
     },
     extend: {
       backgroundImage: {
