@@ -30,10 +30,10 @@ export const PlayBar = (props : any) => {
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     return(
-        <div className="w-5/6 bg-background">
-            <button className="text-primary text-3xl" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
-            <button className="text-primary text-7xl" onClick={() => player.togglePlay()}><CiPlay1 /></button>
-            <button className="text-primary text-3xl" onClick={() => player.nextTrack()}><RxTrackNext /></button>
+        <div className="flex justify-center items-baseline rounded-lg m-5 w-5/6 bg-background">
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
+            <button className="text-primary p-5 text-7xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.togglePlay()}><CiPlay1 /></button>
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
         </div>
     )
 }
