@@ -1,6 +1,6 @@
 import { WebPlaybackSDK } from "react-spotify-web-playback-sdk";
 import { SongTitle } from "./SongTitle";
-import { TogglePlay } from "./TogglePlay";
+import { PlayBar } from "./PlayBar";
 import { useCallback } from "react";
 
 
@@ -13,15 +13,17 @@ export const WebPlayback = (props : any) => {
 
     return (
         <>
-            <div className="container">
+            <div>
                 <div className="main-wrapper">
                     <WebPlaybackSDK
                         initialDeviceName="My Spotify App"
                         getOAuthToken={getOAuthToken}
                         connectOnInitialized={true}
                         initialVolume={0.5}>
-                        <TogglePlay token={props.token}/>
-                        <SongTitle />
+                            <div className="flex justify-center items-center">
+                                <PlayBar token={props.token}/>
+                                {/* <SongTitle /> */}
+                            </div>
                         {/* <ServerInfo /> */}
                     </WebPlaybackSDK>
                 </div>

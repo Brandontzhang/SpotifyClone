@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useErrorState, usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
+import { CiPlay1 } from 'react-icons/ci/index';
+import { RxTrackPrevious, RxTrackNext } from 'react-icons/rx/index';
 
-export const TogglePlay = (props : any) => {
+
+export const PlayBar = (props : any) => {
 
     const webPlaybackSDKReady = useWebPlaybackSDKReady();
     const player = useSpotifyPlayer();
@@ -27,10 +30,10 @@ export const TogglePlay = (props : any) => {
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     return(
-        <div>
-            <button onClick={() => player.togglePlay()}>Toggle Play</button>
-            <button onClick={() => player.pause()}>pause</button>
-            <button onClick={() => player.resume()}>resume</button>
+        <div className="w-5/6 bg-background">
+            <button className="text-primary text-3xl" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
+            <button className="text-primary text-7xl" onClick={() => player.togglePlay()}><CiPlay1 /></button>
+            <button className="text-primary text-3xl" onClick={() => player.nextTrack()}><RxTrackNext /></button>
         </div>
     )
 }

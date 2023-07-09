@@ -22,6 +22,7 @@
     "nodemon": "^2.0.22",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.10.1",
     "react-spotify-web-playback-sdk": "^3.0.2",
     "request": "^2.88.2",
     "ts-node": "^10.9.1"

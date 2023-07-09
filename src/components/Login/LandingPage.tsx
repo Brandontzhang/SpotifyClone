@@ -18,7 +18,7 @@ export const LandingPage = () => {
     }, [])
 
     return (
-        <div className="bg-[#111320] h-screen w-screen">
+        <div className="bg-backgroundDark h-screen w-screen">
              { (token === '') ? <LoginPage /> : <WebPlayback token={token} getOAuthToken={getOAuthToken} /> }
         </div>
     )
