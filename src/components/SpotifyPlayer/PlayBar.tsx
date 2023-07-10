@@ -71,7 +71,6 @@ export const PlayBar = (props : any) => {
     }, [volume]);
 
 
-    
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     return (
@@ -81,7 +80,7 @@ export const PlayBar = (props : any) => {
             <div className="p-5">
               <span className="text-primary text-xl font-bold">{title}</span>
               <div>
-                {artists.map(artist => <span className="text-primary pr-3">{artist.name}</span>)}
+                {artists.map((artist, index) => <span key={index} className="text-primary pr-3">{artist.name}</span>)}
               </div>
             </div>
           </div>

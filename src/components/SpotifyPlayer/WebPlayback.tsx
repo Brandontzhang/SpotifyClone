@@ -10,6 +10,8 @@ export const WebPlayback = (props : any) => {
         [props.token]
     );
 
+    const initialVolume = 0.5;
+
     return (
         <>
             <div>
@@ -18,9 +20,9 @@ export const WebPlayback = (props : any) => {
                         initialDeviceName="My Spotify App"
                         getOAuthToken={getOAuthToken}
                         connectOnInitialized={true}
-                        initialVolume={0.5}>
+                        initialVolume={initialVolume}>
                             <div className="flex justify-center items-center">
-                                <PlayBar token={props.token}/>
+                                <PlayBar token={props.token} initialVolume={initialVolume}/>
                             </div>
                     </WebPlaybackSDK>
                 </div>
