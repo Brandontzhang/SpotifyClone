@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { SpotifyPink } from "../../assets";
 
 export const LoginPage = () => {
 
@@ -11,13 +12,13 @@ export const LoginPage = () => {
     return (
         <div>
             <div className="flex flex-col justify-center items-center p-20">
-                <div className="p-5">
-                <span className="text-primary text-3xl">My Spotify Clone! (The theme is <span className="text-highlight">pink!</span>)</span>
+                <div className="pt-0 p-10">
+                    <span className="text-primary text-3xl">My Spotify Clone! (The theme is <span className="text-highlight">pink!</span>)</span>
                 </div>
-                <div className="h-[200px] w-[200px] m-20">
-                    <img className="object-contain" src='src\assets\spotifyPink.svg'></img>
+                <div className="p-10">
+                    <SpotifyPink />
                 </div>
-                <button className="min-w-fit w-[310px] m-10 border border-primary rounded-xl transition ease-in-out hover:scale-110 duration-300">
+                <button className="min-w-fit w-[310px] mt-20 border border-primary rounded-xl transition ease-in-out hover:scale-110 duration-300">
                     <div className="p-5">
                         <a href="http://localhost:5000/auth/login">
                             <span className="text-primary text-3xl">Sign-in with Spotify</span>
