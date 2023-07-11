@@ -4,7 +4,7 @@ import { CiPlay1, CiPause1 } from 'react-icons/ci/index';
 import { RxTrackPrevious, RxTrackNext } from 'react-icons/rx/index';
 import { ProgressPlayButton } from "./ProgressPlayButton";
 import { VolumeBar } from "./VolumeBar";
-
+import { Forward, Rewind } from "../../assets";
 
 export const PlayBar = (props : any) => {
 
@@ -68,6 +68,15 @@ export const PlayBar = (props : any) => {
       return `${minutes}:${remainingSeconds < 10? '0' : ''}${remainingSeconds}`;
     }
 
+    const shiftTime = (shiftSeconds : number) => {
+
+      console.log(`current time is ${currentTime}`);
+      setCurrentTime(ct => {
+        player?.seek((ct + shiftSeconds) * 1000);
+
+        return ct + shiftSeconds;
+      });
+    } 
 
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
@@ -84,6 +93,9 @@ export const PlayBar = (props : any) => {
           </div>
 
           <div className="flex justify-center items-end w-1/2">
+
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(-10)}><Rewind/></button>
+
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
             
             <div className="flex flex-col items-center">
@@ -94,6 +106,9 @@ export const PlayBar = (props : any) => {
             </div>
             
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
+
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(10)}><Forward/></button>
+
           </div>
 
           <div className="flex flex-row items-center">

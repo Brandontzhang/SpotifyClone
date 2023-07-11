@@ -22,7 +22,6 @@ export const ProgressPlayButton = (props : CircleProps) => {
 
 
     useEffect(() => {
-        console.log(props.percentage);
         setPercentage(props.percentage);
         setDash((percentage * circumference) / 100);
     }, [props.percentage]);
