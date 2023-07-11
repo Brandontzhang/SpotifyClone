@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import { CiPlay1 } from 'react-icons/ci/index';
-import { JsxElement } from 'typescript';
-
 type CircleProps = {
     size : number,
     strokeWidth : number,
@@ -25,6 +22,7 @@ export const ProgressPlayButton = (props : CircleProps) => {
 
 
     useEffect(() => {
+        console.log(props.percentage);
         setPercentage(props.percentage);
         setDash((percentage * circumference) / 100);
     }, [props.percentage]);

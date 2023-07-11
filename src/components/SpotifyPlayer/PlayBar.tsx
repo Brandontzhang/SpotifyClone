@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useErrorState, usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
 import { CiPlay1, CiPause1 } from 'react-icons/ci/index';
 import { RxTrackPrevious, RxTrackNext } from 'react-icons/rx/index';
@@ -17,26 +17,25 @@ export const PlayBar = (props : any) => {
     const [percentage, setPercentage] = useState(0);
 
     // Start up variables, no need to track state
-    let duration : number = 0;
-
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [artists, setArtists] = useState<{name : string, uri : string, url : string}[]>([]);
 
     const [volume, setVolume] = useState(props.initialVolume);
 
-    
     // Initialize song information
     useEffect(() => {
       if (playbackState) {
-        duration = playbackState.duration;
+        setCurrentTime(Math.floor(playbackState.position / 1000))
+        setDuration(Math.floor(playbackState.duration / 1000));
         setTitle(playbackState.track_window.current_track.name);
         setArtists(playbackState.track_window.current_track.artists);
         let url = playbackState.context.metadata?.current_item.images[0].url;
         setImage(url ? url : "");
       }
     }, [playbackState]);
-
 
     // Initiate device
     useEffect(() => {
@@ -53,22 +52,21 @@ export const PlayBar = (props : any) => {
 
     }, [playerDevice?.device_id]);
 
-
-    // Calculate percentage of song
-    useEffect(() => {
-      if (playbackState) {
-        let currentTime = playbackState.position;
-        let estimatedDuration = playbackState.context.metadata?.current_item.estimated_duration;
-
-        if (estimatedDuration) {
-          setPercentage(parseFloat(((currentTime / estimatedDuration) * 100).toFixed(2)));
-        }
-      }
-    }, [playbackState]);
-
+    // Volume 
     useEffect(() => {
       player?.setVolume(volume);
     }, [volume]);
+
+    useEffect(() => {
+      setPercentage(parseFloat(((currentTime / duration) * 100).toFixed(2)));
+    }, [currentTime]);
+
+    const convertMSToMin = (seconds : number) => {
+      let minutes = Math.floor(seconds / 60);
+      let remainingSeconds = (seconds % 60);
+      
+      return `${minutes}:${remainingSeconds < 10? '0' : ''}${remainingSeconds}`;
+    }
 
 
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
@@ -85,12 +83,17 @@ export const PlayBar = (props : any) => {
             </div>
           </div>
 
-          <div className="flex justify-center items-baseline w-1/2">
-            <button className="text-primary p-5 pb-0 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
-            <ProgressPlayButton progressBarClassName="stroke-highlight" size={250} strokeWidth={10} percentage={percentage} > 
-              <button className="text-primary text-7xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.togglePlay()}>{playbackState?.paused ? <CiPlay1 /> : <CiPause1 />}</button>
-            </ProgressPlayButton>
-            <button className="text-primary p-5 pb-0 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
+          <div className="flex justify-center items-end w-1/2">
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
+            
+            <div className="flex flex-col items-center">
+              <ProgressPlayButton progressBarClassName="stroke-highlight" size={250} strokeWidth={10} percentage={percentage} > 
+                <button className="text-primary text-7xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.togglePlay()}>{playbackState?.paused ? <CiPlay1 /> : <CiPause1 />}</button>
+              </ProgressPlayButton>
+              <span className="text-primary text-xs pt-5">{convertMSToMin(currentTime)}/{convertMSToMin(duration)}</span>
+            </div>
+            
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
           </div>
 
           <div className="flex flex-row items-center">
