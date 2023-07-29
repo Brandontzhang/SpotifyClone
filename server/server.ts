@@ -142,13 +142,34 @@ app.get('/playlists', (_req : Request, res : Response) => {
 
     request.get(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
-          res.send(body);
+            res.send(body);
         } else {
             res.send(response);
         }
       });
 
 });
+
+/**
+ * Get the songs associated with the playlist id provided
+ */
+app.get('/playlist/:playlistid/tracks', (req : Request, res : Response) => {
+    let {access_token, token_type} = token_info;
+
+    var authOptions = {
+      url: `https://api.spotify.com/v1/playlists/${req.params.playlistid}/tracks?offset=0&limit=100`,
+      headers: { 'Authorization': `${token_type} ${access_token}` },
+      json: true
+    };
+
+    request.get(authOptions, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            res.send(body);
+        } else {
+            res.send(response);
+        }
+    });
+})
 
 app.get('/test', (_req : Request, res : Response) => {
     res.send(200);
