@@ -12,8 +12,12 @@ dotenv.config()
 const spotify_client_id : string | undefined = process.env.SPOTIFY_CLIENT_ID;
 const spotify_client_secret : string | undefined = process.env.SPOTIFY_CLIENT_SECRET;
 
-let access_token = "";
-let refresh_token = "";
+let token_info : any = {
+    access_token : "",
+    token_type : "",
+    scope: "",
+    expires_in: 0,
+};
 
 const app = express();
 app.use(cors());
@@ -36,6 +40,7 @@ app.get('/auth/login', (_req : Request, res : Response) => {
                user-read-email \
                user-read-private \
                user-modify-playback-state \
+               playlist-read-private \
                "
 
     var state = generateRandomString(16);
@@ -73,8 +78,7 @@ app.get('/auth/callback', (req : Request, res : Response) => {
 
     request.post(authOptions, (error, response, body) => {
         if (!error && response.statusCode === 200) {
-            access_token = body.access_token;
-            refresh_token = body.refresh_token;
+            token_info = body;
             res.redirect("http://localhost:5173");
         } else {
             // TODO: Error handling on bad login
@@ -87,10 +91,7 @@ app.get('/auth/callback', (req : Request, res : Response) => {
  * The current access token is saved on the server and can be fetched using this endpoint
  */
 app.get('/auth/token', (_req : Request, res : Response) => {
-    res.json({
-        access_token : access_token,
-        refresh_token : refresh_token
-    })
+    res.json(token_info)
 });
 
 /**
@@ -110,9 +111,9 @@ app.get('/refresh_token', function(req, res) {
   
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        var access_token = body.access_token;
+        token_info = body;
         res.send({
-          'access_token': access_token
+          'access_token': token_info.access_token
         });
       }
     });
@@ -123,11 +124,35 @@ app.get('/refresh_token', function(req, res) {
  * Clears out the current tokens to logout. Would need to fetch a new token. 
  */
 app.get('/logout', (_req : Request, res : Response) => {
-    access_token = "";
-    refresh_token = "";
-
+    token_info = {};
     res.send(200);
 });
+
+/**
+ * Get a playlist owned by a Spotify User
+ */
+app.get('/playlists', (_req : Request, res : Response) => {
+    let {access_token, token_type} = token_info;
+
+    var authOptions = {
+      url: 'https://api.spotify.com/v1/me/playlists',
+      headers: { 'Authorization': `${token_type} ${access_token}` },
+      json: true
+    };
+
+    request.get(authOptions, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          res.send(body);
+        } else {
+            res.send(response);
+        }
+      });
+
+});
+
+app.get('/test', (_req : Request, res : Response) => {
+    res.send(200);
+})
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
