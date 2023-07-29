@@ -69,8 +69,6 @@ export const PlayBar = (props : any) => {
     }
 
     const shiftTime = (shiftSeconds : number) => {
-
-      console.log(`current time is ${currentTime}`);
       setCurrentTime(ct => {
         player?.seek((ct + shiftSeconds) * 1000);
 
@@ -81,8 +79,9 @@ export const PlayBar = (props : any) => {
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     return (
-        <div className="flex justify-between items-center rounded-lg m-5 p-5 w-4/6 bg-background">
-          <div className="flex flex-row justify-center items-center">
+        <div className="flex basis-0 justify-between items-center rounded-lg m-5 p-5 w-4/6 bg-background">
+
+          <div className="flex flex-row justify-center items-center w-[400px]">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
             <div className="p-5">
               <span className="text-primary text-xl font-bold">{title}</span>
@@ -92,28 +91,24 @@ export const PlayBar = (props : any) => {
             </div>
           </div>
 
-          <div className="flex justify-center items-end w-1/2">
-
+          <div className="flex justify-center items-end w-[700px]">
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(-10)}><Rewind/></button>
-
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
-            
             <div className="flex flex-col items-center">
               <ProgressPlayButton progressBarClassName="stroke-highlight" size={250} strokeWidth={10} percentage={percentage} > 
                 <button className="text-primary text-7xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.togglePlay()}>{playbackState?.paused ? <CiPlay1 /> : <CiPause1 />}</button>
               </ProgressPlayButton>
               <span className="text-primary text-xs pt-5">{convertMSToMin(currentTime)}/{convertMSToMin(duration)}</span>
             </div>
-            
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
-
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(10)}><Forward/></button>
-
           </div>
 
-          <div className="flex flex-row items-center">
+          <div className="flex justify-center items-center w-[300px]">
             <VolumeBar initialVolume={volume} setVolume={setVolume} />
           </div>
         </div>
     )
 }
+
+export default PlayBar;
