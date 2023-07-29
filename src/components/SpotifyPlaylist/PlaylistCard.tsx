@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Playlist, Image } from "../../types/PlaylistTypes"
 import { CiPlay1, CiPause1 } from 'react-icons/ci/index';
+import { Link } from "react-router-dom";
+import { PlaylistContext } from "../../context/PlayListContext";
 
 export const PlaylistCard = (props : any) => {
 
@@ -9,6 +11,8 @@ export const PlaylistCard = (props : any) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isHover, setIsHover] = useState(false);
 
+    const { setPlaylist } = useContext(PlaylistContext);
+
     const getLargestImage = (imgs : Image[]) : string => {
         if (!imgs || imgs.length === 0) {
             return "";
@@ -16,14 +20,20 @@ export const PlaylistCard = (props : any) => {
         return imgs.reduce((max, img) => (max.height * max.width) > (img.height * img.width) ? max : img).url;
     }
 
+    const playlistLink = {
+        pathname : `playlist/${playlist.id}`,
+    }
+
     return (
-        <div className="flex items-center m-[12px] bg-background hover:cursor-pointer" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            <img className="h-[100px] w-[100px] rounded-xl" src={getLargestImage(playlist.images)} />
-            <div className="flex w-full justify-between px-[48px]">
-                <span className="text-primary">{playlist.name}</span>
-                {isHover && !isPlaying ? <button className="text-primary"><CiPlay1 /></button> : <></> }
-                {isPlaying ? <button className="text-priamry"><CiPause1 /></button> : <></>}
+        <Link onClick={() => setPlaylist(playlist)} to={playlistLink}>
+            <div className="flex items-center m-[12px] bg-background hover:cursor-pointer" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+                <img className="h-[100px] w-[100px] rounded-xl" src={getLargestImage(playlist.images)} />
+                <div className="flex w-full justify-between px-[48px]">
+                    <span className="text-primary">{playlist.name}</span>
+                    {isHover && !isPlaying ? <button className="text-primary"><CiPlay1 /></button> : <></> }
+                    {isPlaying ? <button className="text-priamry"><CiPause1 /></button> : <></>}
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
