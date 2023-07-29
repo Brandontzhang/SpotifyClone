@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const usePlaylists = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [playlists, setPlaylists] = useState<any>(null);
+    const [data, setData] = useState<any>(null);
     const [serverError, setServerError] = useState<any>(null);
 
     const fetchPlaylists = async () => {
@@ -10,7 +10,7 @@ const usePlaylists = () => {
             const response = await fetch('http://localhost:5000/playlists');
             const data = await response.json();
 
-            setPlaylists(data);
+            setData(data);
             setIsLoading(false);
         } catch (error : any) {
             setServerError(error);
@@ -23,7 +23,7 @@ const usePlaylists = () => {
         fetchPlaylists();
     }, []);
 
-    return { isLoading, playlists, serverError};
+    return { isLoading, data, serverError};
 }
 
 export default usePlaylists;

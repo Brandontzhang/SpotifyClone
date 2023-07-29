@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { WebPlayback } from "../SpotifyPlayer/WebPlayback";
 import { LoginPage } from "./LoginPage";
+import { TokenContext } from "../../context/TokenContext";
 
 export const LandingPage = () => {
 
@@ -18,9 +19,11 @@ export const LandingPage = () => {
     }, [])
 
     return (
-        <div className="bg-backgroundDark h-screen w-screen">
-             { (token === '') ? <LoginPage /> : <WebPlayback token={token} getOAuthToken={getOAuthToken} /> }
-        </div>
+        <TokenContext.Provider value={{token : token, setToken : setToken}}>
+            <div className="bg-backgroundDark h-screen w-screen">
+                { (token === '') ? <LoginPage /> : <WebPlayback />}
+            </div>
+        </TokenContext.Provider>
     )
 
 }

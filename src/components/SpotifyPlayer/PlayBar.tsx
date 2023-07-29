@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useErrorState, usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
 import { CiPlay1, CiPause1 } from 'react-icons/ci/index';
 import { RxTrackPrevious, RxTrackNext } from 'react-icons/rx/index';
 import { ProgressPlayButton } from "./ProgressPlayButton";
 import { VolumeBar } from "./VolumeBar";
 import { Forward, Rewind } from "../../assets";
+import { TokenContext } from "../../context/TokenContext";
 
 export const PlayBar = (props : any) => {
 
@@ -24,6 +25,8 @@ export const PlayBar = (props : any) => {
     const [artists, setArtists] = useState<{name : string, uri : string, url : string}[]>([]);
 
     const [volume, setVolume] = useState(props.initialVolume);
+
+    const { token } = useContext(TokenContext);
 
     // Initialize song information
     useEffect(() => {
@@ -46,7 +49,7 @@ export const PlayBar = (props : any) => {
         body: JSON.stringify({ device_ids: [playerDevice.device_id], play: false }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${props.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
