@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const VolumeBar = (props : any) => {
 
-    const [volume] = useState(props.initialVolume);
+    const [volume, setVolume] = useState(props.initialVolume);
 
     // TODO (if you wanna lose your mind later) change the background color of the volume scroll
     return (
@@ -15,7 +15,8 @@ export const VolumeBar = (props : any) => {
                 step={0.01}
                 value={volume}
                 onChange={event => {
-                    props.setVolume(event.target.valueAsNumber)
+                    props.setVolume(event.target.valueAsNumber);
+                    setVolume(event.target.value);
                 }}
             >
             </input>
