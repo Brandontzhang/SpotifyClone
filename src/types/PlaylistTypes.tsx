@@ -3,6 +3,7 @@ export type Playlist = {
     description : string;
     external_urls : ExternalURL;
     href : string;
+    id : string;
     images : [Image];
     name : string;
     owner : Person;
