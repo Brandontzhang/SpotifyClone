@@ -6,9 +6,10 @@ Add remaining action buttons (Comp 7/10)
 Get PlayList
 - API fetch (comp 7/28)
 - Display playlists (comp 7/29)
-- Navigate to seleted playlist
+- Navigate to selected playlist (Comp 7/29)
     - Add routing
 - Play song from playlist 
+    - will need to use the api (set next song and skip)
 
 Manipulate playlist (next songs)
 - loop (repeat)
