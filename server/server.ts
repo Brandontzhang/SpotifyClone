@@ -21,6 +21,8 @@ let token_info : any = {
 
 const app = express();
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const generateRandomString = (length : number) => {
     var text = '';
@@ -32,6 +34,18 @@ const generateRandomString = (length : number) => {
     return text;
 }
 
+const getSpotifyAPIAuthOptions = (url : string) => {
+    let {access_token, token_type} = token_info;
+
+    var authOptions = {
+        url : `https://api.spotify.com/${url}`,
+        headers: { 'Authorization': `${token_type} ${access_token}` },
+        json: true,
+    }
+
+    return authOptions;
+}
+
 /**
  * Sends request to Spotify Authorization in order to receive token
  */
@@ -41,6 +55,8 @@ app.get('/auth/login', (_req : Request, res : Response) => {
                user-read-private \
                user-modify-playback-state \
                playlist-read-private \
+               user-modify-playback-state \
+               user-library-read \
                "
 
     var state = generateRandomString(16);
@@ -132,15 +148,7 @@ app.get('/logout', (_req : Request, res : Response) => {
  * Get a playlist owned by a Spotify User
  */
 app.get('/playlists', (_req : Request, res : Response) => {
-    let {access_token, token_type} = token_info;
-
-    var authOptions = {
-      url: 'https://api.spotify.com/v1/me/playlists',
-      headers: { 'Authorization': `${token_type} ${access_token}` },
-      json: true
-    };
-
-    request.get(authOptions, function(error, response, body) {
+    request.get(getSpotifyAPIAuthOptions('v1/me/playlists'), function(error, response, body) {
         if (!error && response.statusCode === 200) {
             res.send(body);
         } else {
@@ -154,15 +162,7 @@ app.get('/playlists', (_req : Request, res : Response) => {
  * Get the songs associated with the playlist id provided
  */
 app.get('/playlist/:playlistid/tracks', (req : Request, res : Response) => {
-    let {access_token, token_type} = token_info;
-
-    var authOptions = {
-      url: `https://api.spotify.com/v1/playlists/${req.params.playlistid}/tracks?offset=0&limit=100`,
-      headers: { 'Authorization': `${token_type} ${access_token}` },
-      json: true
-    };
-
-    request.get(authOptions, function(error, response, body) {
+    request.get(getSpotifyAPIAuthOptions(`v1/playlists/${req.params.playlistid}/tracks?offset=0&limit=50`), function(error, response, body) {
         if (!error && response.statusCode === 200) {
             res.send(body);
         } else {
@@ -171,8 +171,42 @@ app.get('/playlist/:playlistid/tracks', (req : Request, res : Response) => {
     });
 })
 
-app.get('/test', (_req : Request, res : Response) => {
-    res.send(200);
+/**
+ * Add a song to the playback queue
+ */
+app.post('/player/queue', (req : Request, res : Response) => {
+    let trackURI = req.body.URI;
+
+    request.post(getSpotifyAPIAuthOptions(`v1/me/player/queue?uri=${trackURI}`), function(error, response) {
+        if (!error && response.statusCode == 204) {
+            res.sendStatus(response.statusCode);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    });
+})
+
+/**
+ * Check if the given list of songs are in the playlist 
+ * (Max 50 ids)
+ */
+app.post('/me/playlist/contains', (req : Request, res : Response) => {
+    let songIds = req.body;
+    request.get(getSpotifyAPIAuthOptions(`v1/me/tracks/contains?ids=${songIds.join(',')}`), function(error, response, body){
+        if (!error && response.statusCode === 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
 })
 
 app.listen(port, () => {

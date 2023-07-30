@@ -6,6 +6,7 @@ export default {
   theme: {
     colors : {
       primary: "var(--primary-color)",
+      primary200 : "var(--primary-color-200)",
       secondary : "var(--secondary-color)",
 
       background : "var(--background-color)",
