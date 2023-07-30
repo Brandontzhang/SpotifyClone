@@ -8,8 +8,17 @@ Get PlayList
 - Display playlists (comp 7/29)
 - Navigate to selected playlist (Comp 7/29)
     - Add routing
-- Play song from playlist 
+- Play song from playlist  (comp 7/30)
     - will need to use the api (set next song and skip)
+- Display playlist (comp 7/30)
+- Add song to liked list (saved song)
+    - svg update
+    - api action
+    - click trigger
+
+Refactoring
+- move all server calls into a service file
+- create custom hooks for any API calls
 
 Manipulate playlist (next songs)
 - loop (repeat)
