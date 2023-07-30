@@ -28,6 +28,7 @@ export type Person = {
     id : string;
     type : string;
     uri : string;
+    name: string;
 }
 
 export type ExternalURL = {

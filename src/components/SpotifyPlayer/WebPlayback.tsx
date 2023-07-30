@@ -23,7 +23,7 @@ export const WebPlayback = () => {
     return (
         <>
             <div>
-                <div className="main-wrapper">
+                <div className="main-wrapper h-screen">
                     <WebPlaybackSDK
                         initialDeviceName="My Spotify App"
                         getOAuthToken={getOAuthToken}
