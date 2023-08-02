@@ -24,7 +24,7 @@ export const PlayBar = (props : any) => {
     const [image, setImage] = useState("");
     const [artists, setArtists] = useState<{name : string, uri : string, url : string}[]>([]);
 
-    const [volume, setVolume] = useState(props.initialVolume);
+    const [volume, setVolume] = useState(0.5);
 
     const { token } = useContext(TokenContext);
 

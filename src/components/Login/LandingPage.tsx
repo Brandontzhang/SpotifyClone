@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { LoginPage } from "./LoginPage";
 import { TokenContext } from "../../context/TokenContext";
 import { MainPage } from "../MainPage";
-import { WebPlayback } from "../SpotifyPlayer/WebPlayback";
 
 export const LandingPage = () => {
 
