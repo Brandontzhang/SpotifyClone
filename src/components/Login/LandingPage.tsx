@@ -20,7 +20,7 @@ export const LandingPage = () => {
 
     return (
         <TokenContext.Provider value={{token : token, setToken : setToken}}>
-            <div className="bg-background300">
+            <div className="bg-background300 h-screen">
                 { (token === '') ? <LoginPage /> : <MainPage />}
             </div>
         </TokenContext.Provider>

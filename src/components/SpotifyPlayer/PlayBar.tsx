@@ -92,9 +92,10 @@ export const PlayBar = (props : any) => {
 
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
-    return (
-        <div className="flex basis-0 justify-between items-center rounded-lg p-5 w-4/6 bg-background100">
+    // TODO : Fix spacing on smaller screens
 
+    return (
+        <div className="flex basis-0 justify-between items-center rounded-lg min-w-fit w-4/6 bg-background100">
           <div className="flex flex-row justify-center items-center w-[400px]">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
             <div className="p-5">

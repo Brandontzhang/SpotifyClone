@@ -21,7 +21,7 @@ export const MainPage = () => {
             getOAuthToken={getOAuthToken}
             connectOnInitialized={true}
             initialVolume={initialVolume}>
-                <div className="grid grid-cols-6 h-auto min-h-screen">
+                <div className="grid grid-cols-6 h-full">
                     <div className="col-span-1 m-2 mr-0 rounded-lg">
                         <SideNav />
                     </div>
