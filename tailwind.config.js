@@ -9,9 +9,9 @@ export default {
       primary200 : "var(--primary-color-200)",
       secondary : "var(--secondary-color)",
 
-      background : "var(--background-color)",
-      backgroundLite : "var(--background-color-lite)",
-      backgroundDark : "var(--background-color-dark)",
+      background100 : "var(--background-color-100)",
+      background200 : "var(--background-color-200)",
+      background300 : "var(--background-color-300)",
 
       text : "var(--text-color)",
       highlight : "var(--highlight-color)"

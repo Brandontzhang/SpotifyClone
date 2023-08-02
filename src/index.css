@@ -5,9 +5,11 @@
 :root {
   --primary-color : #cccfe0;
   --primary-color-200 : #cccfe0d0;
-  --background-color : #161A2B;
-  --background-color-lite : #4E535F;
-  --background-color-dark : #111320;
+
+  --background-color-100 : #161A2B;
+  --background-color-200 : #111320;
+  --background-color-300 : #090b14;
+
   --text-color : #FFF;
   --highlight-color : #D979AB;
 }

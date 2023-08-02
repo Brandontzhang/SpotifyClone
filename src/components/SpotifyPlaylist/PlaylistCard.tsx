@@ -26,8 +26,8 @@ export const PlaylistCard = (props : any) => {
 
     return (
         <Link onClick={() => setPlaylist(playlist)} to={playlistLink}>
-            <div className="flex items-center m-[12px] bg-background hover:cursor-pointer" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-                <img className="h-[100px] w-[100px] rounded-xl" src={getLargestImage(playlist.images)} />
+            <div className="flex items-center m-[12px] bg-background100 rounded-xl hover:cursor-pointer" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+                <img className="h-[100px] w-[100px] m-2 rounded-xl" src={getLargestImage(playlist.images)} />
                 <div className="flex w-full justify-between px-[48px]">
                     <span className="text-primary">{playlist.name}</span>
                     {isHover && !isPlaying ? <button className="text-primary"><CiPlay1 /></button> : <></> }

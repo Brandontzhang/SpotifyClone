@@ -14,7 +14,7 @@ const Playlists = () => {
     }, [data])
 
     return (
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 overflow-auto">
             { playlists.map((pl : Playlist) => 
                 <PlaylistCard key={pl.snapshot_id} playlist={pl} />
             ) }

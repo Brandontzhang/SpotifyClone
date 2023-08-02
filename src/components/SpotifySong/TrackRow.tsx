@@ -67,7 +67,7 @@ export const TrackRow = (props : any) => {
     }
 
     return (
-        <div className="grid grid-cols-10 bg-background m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => play(track.uri)}>
+        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => play(track.uri)}>
             <div className="flex flex-col col-span-4">
                 <span className="text-primary text-xl">{track.name}</span>
                 <span className="text-primary200">{getArtists()}</span>

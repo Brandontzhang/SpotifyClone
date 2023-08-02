@@ -22,32 +22,34 @@ export const WebPlayback = () => {
 
     return (
         <>
-            <div>
-                <div className="main-wrapper h-screen">
-                    <WebPlaybackSDK
-                        initialDeviceName="My Spotify App"
-                        getOAuthToken={getOAuthToken}
-                        connectOnInitialized={true}
-                        initialVolume={initialVolume}>
-                            <PlaylistContext.Provider value={{playlist, setPlaylist}}>
-                                <BrowserRouter>
-                                    <Routes>
-                                        <Route path="/" element={
-                                            <Playlists/>
-                                        }>
-                                        </Route>
-                                        <Route path="/playlist/:playlistID" element={
-                                            <PlaylistView />
-                                        }>
-                                        </Route>
-                                    </Routes>
-                                </BrowserRouter>
-                            </PlaylistContext.Provider>
-                            <div className="flex justify-center items-center">
+            <div className="h-full">
+                <WebPlaybackSDK
+                    initialDeviceName="My Spotify App"
+                    getOAuthToken={getOAuthToken}
+                    connectOnInitialized={true}
+                    initialVolume={initialVolume}>
+                        <div className="h-full">
+                            <div className="h-2/3">
+                                <PlaylistContext.Provider value={{playlist, setPlaylist}}>
+                                    <BrowserRouter>
+                                        <Routes>
+                                            <Route path="/" element={
+                                                <Playlists/>
+                                            }>
+                                            </Route>
+                                            <Route path="/playlist/:playlistID" element={
+                                                <PlaylistView />
+                                            }>
+                                            </Route>
+                                        </Routes>
+                                    </BrowserRouter>
+                                </PlaylistContext.Provider>
+                            </div>
+                            <div className="flex justify-center items-center h-1/3">
                                 <PlayBar initialVolume={initialVolume}/>
                             </div>
-                    </WebPlaybackSDK>
-                </div>
+                        </div>
+                </WebPlaybackSDK>
             </div>
         </>
     )

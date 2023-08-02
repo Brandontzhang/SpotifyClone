@@ -10,8 +10,8 @@ export const LoginPage = () => {
     }, []);
 
     return (
-        <div>
-            <div className="flex flex-col justify-center items-center p-20">
+        <div className="h-screen">
+            <div className="flex flex-col justify-center items-center p-20 h-full">
                 <div className="pt-0 p-10">
                     <span className="text-primary text-3xl">My Spotify Clone! (The theme is <span className="text-highlight">pink!</span>)</span>
                 </div>
