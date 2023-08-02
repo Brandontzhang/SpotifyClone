@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useErrorState, usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
+import { usePlaybackState, usePlayerDevice, useSpotifyPlayer, useWebPlaybackSDKReady } from "react-spotify-web-playback-sdk";
 import { CiPlay1, CiPause1 } from 'react-icons/ci/index';
 import { RxTrackPrevious, RxTrackNext } from 'react-icons/rx/index';
 import { ProgressPlayButton } from "./ProgressPlayButton";
@@ -13,7 +13,7 @@ export const PlayBar = (props : any) => {
     const player = useSpotifyPlayer();
     const playbackState = usePlaybackState(true, 100);
     const playerDevice = usePlayerDevice();
-    const errorState = useErrorState();
+    // const errorState = useErrorState();
 
     const [percentage, setPercentage] = useState(0);
 
@@ -79,10 +79,21 @@ export const PlayBar = (props : any) => {
       });
     } 
 
+    const setRepeat = (state : string) => {
+      fetch(`http://localhost:5000/me/player/repeat`, {
+        method: "PUT",
+        mode: "cors", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify({state : state})
+      });
+    }
+
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     return (
-        <div className="flex basis-0 justify-between items-center rounded-lg m-5 p-5 w-4/6 bg-background100">
+        <div className="flex basis-0 justify-between items-center rounded-lg p-5 w-4/6 bg-background100">
 
           <div className="flex flex-row justify-center items-center w-[400px]">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
@@ -105,6 +116,7 @@ export const PlayBar = (props : any) => {
             </div>
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(10)}><Forward/></button>
+            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => setRepeat("track")}>R</button>
           </div>
 
           <div className="flex justify-center items-center w-[300px]">

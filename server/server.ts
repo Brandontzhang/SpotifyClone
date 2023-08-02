@@ -209,6 +209,29 @@ app.post('/me/playlist/contains', (req : Request, res : Response) => {
     })
 })
 
+/**
+ * Set player to repeat
+ * state can be one of:
+ * track : repeat current track
+ * context : repeat current context
+ * off : turn repeat off
+ */
+app.put('/me/player/repeat', (req : Request, res : Response) => {
+    let state : string =req.body.state;
+
+    request.put(getSpotifyAPIAuthOptions(`v1/me/player/repeat?state=${state}`), function(error, response){
+        if (!error && response.statusCode === 204) {
+            res.sendStatus(response.statusCode);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
 });
