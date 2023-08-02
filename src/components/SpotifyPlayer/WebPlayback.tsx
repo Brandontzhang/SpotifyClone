@@ -29,7 +29,7 @@ export const WebPlayback = () => {
                     connectOnInitialized={true}
                     initialVolume={initialVolume}>
                         <div className="h-full">
-                            <div className="h-2/3">
+                            <div className="h-2/3 overflow-auto">
                                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
                                     <BrowserRouter>
                                         <Routes>

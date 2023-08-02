@@ -28,7 +28,7 @@ export const PlaylistView = () => {
     return (
         <div className="flex flex-col overflow-auto h-2/3">
             {trackData.map((trackItem : TrackItem, index : number) => 
-                <TrackRow addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} />
+                <TrackRow key={index} addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} />
             )}
         </div>
     )
