@@ -26,7 +26,6 @@ export const PlaylistView = () => {
 
     useEffect(() => {
         if (playlistTracks) {
-            console.log(playlistTracks);
             setTrackData(playlistTracks.items);
         }
     }, [playlistTracks]);
