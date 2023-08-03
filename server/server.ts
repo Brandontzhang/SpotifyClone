@@ -53,9 +53,9 @@ app.get('/auth/login', (_req : Request, res : Response) => {
     var scope = "streaming \
                user-read-email \
                user-read-private \
+               user-read-playback-state \
                user-modify-playback-state \
                playlist-read-private \
-               user-modify-playback-state \
                user-library-read \
                "
 
@@ -145,6 +145,32 @@ app.get('/logout', (_req : Request, res : Response) => {
 });
 
 /**
+ * Play array of songs given
+ */
+app.put('/me/player/track', (req : Request, res : Response) => {
+    let trackURIs = req.body;
+
+    let authOptions = {
+        ...getSpotifyAPIAuthOptions('v1/me/player/play'),
+        body :  {
+            uris: trackURIs
+        }
+    }
+
+    request.put(authOptions, function(error, response) {
+        if (!error && response.statusCode === 204) {
+            res.sendStatus(200);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
+
+/**
  * Get a playlist owned by a Spotify User
  */
 app.get('/playlists', (_req : Request, res : Response) => {
@@ -197,6 +223,23 @@ app.post('/player/queue', (req : Request, res : Response) => {
 app.post('/me/playlist/contains', (req : Request, res : Response) => {
     let songIds = req.body;
     request.get(getSpotifyAPIAuthOptions(`v1/me/tracks/contains?ids=${songIds.join(',')}`), function(error, response, body){
+        if (!error && response.statusCode === 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
+
+/**
+ * Gets the users queue
+ */
+app.get('/me/player/queue', (_req : Request, res : Response) => {
+    request.get(getSpotifyAPIAuthOptions(`v1/me/player/queue`), function(error, response, body){
         if (!error && response.statusCode === 200) {
             res.send(body);
         } else {
