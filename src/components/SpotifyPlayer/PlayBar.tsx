@@ -96,7 +96,7 @@ export const PlayBar = (props : any) => {
 
     return (
         <div className="flex basis-0 justify-between items-center rounded-lg min-w-fit w-4/6 bg-background100">
-          <div className="flex flex-row justify-center items-center w-[400px]">
+          <div className="flex flex-row justify-center items-center w-[400px] p-5">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
             <div className="p-5">
               <span className="text-primary text-xl font-bold">{title}</span>
@@ -106,7 +106,7 @@ export const PlayBar = (props : any) => {
             </div>
           </div>
 
-          <div className="flex justify-center items-end w-[700px]">
+          <div className="flex justify-center items-end w-[700px] p-5">
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(-10)}><Rewind/></button>
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
             <div className="flex flex-col items-center">
@@ -120,7 +120,7 @@ export const PlayBar = (props : any) => {
             <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => setRepeat("track")}>R</button>
           </div>
 
-          <div className="flex justify-center items-center w-[300px]">
+          <div className="flex justify-center items-center w-[300px] p-5">
             <VolumeBar initialVolume={volume} setVolume={setVolume} />
           </div>
         </div>
