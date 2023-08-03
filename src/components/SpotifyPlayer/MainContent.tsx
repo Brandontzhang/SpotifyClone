@@ -21,7 +21,7 @@ export const MainContent = (props : any) => {
                                 <Playlists/>
                             }>
                             </Route>
-                            <Route path="/playlist/:playlistID" element={
+                            <Route path="/playlist/:playlistId" element={
                                 <PlaylistView />
                             }>
                             </Route>
