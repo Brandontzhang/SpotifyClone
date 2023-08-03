@@ -1,4 +1,3 @@
-import { useSpotifyPlayer } from "react-spotify-web-playback-sdk";
 import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
 
@@ -6,21 +5,16 @@ export const TrackRow = (props : any) => {
     const track : Track = props.track;
     const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
-    const player = useSpotifyPlayer();
 
     const play = async (songURI : string) => {
-        await fetch(`http://localhost:5000/player/queue`, {
-            method : "POST",
+        await fetch(`http://localhost:5000/me/player/track`, {
+            method : "PUT",
             mode: "cors", 
             headers: {
                 "Content-Type": "application/json",
             },
-            body : JSON.stringify({
-                URI : songURI
-            })
+            body : JSON.stringify([songURI])
         })
-
-        player?.nextTrack();
     }
 
     const getArtists = () => {
