@@ -1,5 +1,5 @@
-import { ActionMenu } from "./ActionMenu"
-import { TrackQueue } from "./TrackQueue"
+import { ActionMenu } from "./Actions/ActionMenu"
+import { TrackQueue } from "./Queue/TrackQueue"
 
 export const SideNav = () => {
     return (

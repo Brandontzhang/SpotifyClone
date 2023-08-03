@@ -12,7 +12,7 @@ export const MainContent = (props : any) => {
     const initialVolume = props.initialvolume;
     
     return (
-        <div className="h-full">
+        <div className="h-full flex-col justify-between">
             <div className="h-[80%] max-h-[70vh]">
                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
                     <BrowserRouter>
@@ -29,7 +29,7 @@ export const MainContent = (props : any) => {
                     </BrowserRouter>
                 </PlaylistContext.Provider>
             </div>
-            <div className="flex justify-center items-center pt-20 h-[18%]">
+            <div className="flex justify-center items-center h-[28%]">
                 <PlayBar initialVolume={initialVolume}/>
             </div>
         </div>
