@@ -1,34 +1,40 @@
 import { useContext, useEffect, useState } from "react";
 import { PlaylistContext } from "../../context/PlayListContext";
-import { TrackObject } from "../../types/TrackTypes";
+import { PlaylistTrackObject } from "../../types/TrackTypes";
 import { TrackRow } from "../SpotifySong/TrackRow";
 import { usePlaylistSavedTracks } from "../../hooks/usePlaylistSavedTracks";
+import { usePlaylistTracks } from "../../hooks/usePlaylistTracks";
+import { useParams } from "react-router-dom";
 
 export const PlaylistView = () => {
 
     const { playlist } = useContext(PlaylistContext);
-    const [ trackData, setTrackData ] = useState<TrackObject[]>([]);
+    const params = useParams();
+
+    const [playlistId, setPlaylistId] = useState<string>();
+    const [ trackData, setTrackData ] = useState<PlaylistTrackObject[]>([]);
     const { savedTracks } = usePlaylistSavedTracks(trackData);
-
-    const fetchTracks = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/playlist/${playlist.id}/tracks`)
-            const data = await response.json();
-
-            setTrackData(data.items);
-        } catch (error : any) {
-            console.log(error);
-        }
-    }
+    const { playlistTracks } = usePlaylistTracks(playlistId);
 
     useEffect(() => {
-        fetchTracks();
+        if (!playlist.id) {
+            setPlaylistId(params.playlistId);
+        } else {
+            setPlaylistId(playlist.id);
+        }
     }, []);
+
+    useEffect(() => {
+        if (playlistTracks) {
+            console.log(playlistTracks);
+            setTrackData(playlistTracks.items);
+        }
+    }, [playlistTracks]);
 
     return (
         <div className="max-h-full overflow-y-scroll">
             <div className="flex flex-col">
-                {trackData.map((trackItem : TrackObject, index : number) => 
+                {trackData.map((trackItem : PlaylistTrackObject, index : number) => 
                     <TrackRow key={index} addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} />
                 )}
             </div>

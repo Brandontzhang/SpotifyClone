@@ -19,9 +19,6 @@ const Playlists = () => {
                 { playlists.map((pl : Playlist) => 
                     <PlaylistCard key={pl.snapshot_id} playlist={pl} />
                 ) }
-                { playlists.map((pl : Playlist) => 
-                    <PlaylistCard key={pl.snapshot_id} playlist={pl} />
-                ) }
             </div>
         </div>
     )

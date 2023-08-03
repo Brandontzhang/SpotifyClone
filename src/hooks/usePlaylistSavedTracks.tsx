@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { TrackItem } from "../types/TrackTypes";
+import { PlaylistTrackObject } from "../types/TrackTypes";
 
-export const usePlaylistSavedTracks = (trackItems : TrackItem[]) => {
+/**
+ * Checks if the tracks have been saved (liked) by the user
+ * @param trackItems tracks to check
+ * @returns boolean array corresponding to each track item
+ */
+export const usePlaylistSavedTracks = (trackItems : PlaylistTrackObject[]) => {
     const [isLoading, setIsLoading] = useState(false);
     const [savedTracks, setSavedTracks] = useState<boolean[]>([]);
     const [serverError, setServerError] = useState<any>(null);

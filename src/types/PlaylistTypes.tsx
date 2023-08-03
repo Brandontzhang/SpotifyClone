@@ -1,3 +1,5 @@
+import { PlaylistTrackObject } from "./TrackTypes";
+
 export type Playlist = {
     collaborative : boolean;
     description : string;
@@ -10,7 +12,7 @@ export type Playlist = {
     primary_color : string;
     public : boolean;
     snapshot_id : string;
-    tracks : TrackData;
+    tracks : TrackPage;
     type : string;
     uri : string;
 }
@@ -35,7 +37,12 @@ export type ExternalURL = {
     spotify : string;
 }
 
-export type TrackData = {
-    href : string;
-    total : number;
+export type TrackPage = {
+    href: string,
+    limit: number, 
+    next: string,
+    offset: number,
+    previous: string,
+    total: string,
+    items : PlaylistTrackObject[]
 }

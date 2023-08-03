@@ -1,6 +1,6 @@
 import { ExternalURL, Image, Person } from "./PlaylistTypes";
 
-export type TrackItem = {
+export type PlaylistTrackObject = {
     added_at : string;
     added_by : Person
     primary_color : string;
