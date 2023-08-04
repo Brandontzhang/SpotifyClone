@@ -7,6 +7,7 @@ export const TrackRow = (props : any) => {
     const track : Track = props.track;
     const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
+    const { setRefreshQueue } = props;
 
     const getArtists = () => {
         let artists = track.artists;
@@ -53,6 +54,7 @@ export const TrackRow = (props : any) => {
 
     const addQueueClick = (e : any) => {
         e.stopPropagation();
+        setRefreshQueue((refresh : boolean) => !refresh);
         addToQueue(track.uri);
     }
 

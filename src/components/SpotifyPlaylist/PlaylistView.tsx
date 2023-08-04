@@ -5,6 +5,7 @@ import { TrackRow } from "../SpotifySong/TrackRow";
 import { usePlaylistSavedTracks } from "../../hooks/usePlaylistSavedTracks";
 import { usePlaylistTracks } from "../../hooks/usePlaylistTracks";
 import { useParams } from "react-router-dom";
+import { useQueue } from "../../hooks/useQueue";
 
 export const PlaylistView = () => {
 
@@ -15,6 +16,7 @@ export const PlaylistView = () => {
     const [ trackData, setTrackData ] = useState<PlaylistTrackObject[]>([]);
     const { savedTracks } = usePlaylistSavedTracks(trackData);
     const { playlistTracks } = usePlaylistTracks(playlistId);
+    const { setRefreshQueue } = useQueue();
 
     useEffect(() => {
         if (!playlist.id) {
@@ -34,7 +36,7 @@ export const PlaylistView = () => {
         <div className="max-h-full overflow-y-scroll">
             <div className="flex flex-col">
                 {trackData.map((trackItem : PlaylistTrackObject, index : number) => 
-                    <TrackRow key={index} addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} />
+                    <TrackRow key={index} addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} setRefreshQueue={setRefreshQueue} />
                 )}
             </div>
         </div>

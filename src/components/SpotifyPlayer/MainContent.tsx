@@ -14,7 +14,6 @@ export const MainContent = () => {
         <div className="h-full flex-col justify-between">
             <div className="h-[80%] max-h-[70vh]">
                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
-                    <BrowserRouter>
                         <Routes>
                             <Route path="/" element={
                                 <Playlists/>
@@ -25,7 +24,6 @@ export const MainContent = () => {
                             }>
                             </Route>
                         </Routes>
-                    </BrowserRouter>
                 </PlaylistContext.Provider>
             </div>
             <div className="flex justify-center items-center h-[28%]">

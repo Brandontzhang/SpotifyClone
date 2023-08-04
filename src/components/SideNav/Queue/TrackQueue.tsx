@@ -1,19 +1,11 @@
-import { useEffect, useState } from "react";
-import { useQueue } from "../../../hooks/useQueue"
+import { useContext } from "react";
 import { Queue } from "../../../assets";
 import { Track } from "../../../types/TrackTypes";
 import { QueueItem } from "./QueueItem";
+import { QueueContext } from "../../../context/QueueContext";
 
 export const TrackQueue = () => {
-
-    const { queueData } = useQueue();
-    const [queue, setQueue] = useState<Track[]>([]);
-
-    useEffect(() => {
-        if (queueData) {
-            setQueue(queueData.queue);
-        }
-    }, [queueData]);
+    const { queue } = useContext(QueueContext);
 
     return (
         <div>
