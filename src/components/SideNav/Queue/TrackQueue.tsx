@@ -3,9 +3,11 @@ import { Queue } from "../../../assets";
 import { Track } from "../../../types/TrackTypes";
 import { QueueItem } from "./QueueItem";
 import { QueueContext } from "../../../context/QueueContext";
+import { useQueue } from "../../../hooks/useQueue";
 
 export const TrackQueue = () => {
     const { queue } = useContext(QueueContext);
+    useQueue();
 
     return (
         <div>

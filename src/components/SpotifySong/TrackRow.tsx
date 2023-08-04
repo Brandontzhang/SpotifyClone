@@ -1,12 +1,13 @@
 import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
-import { addToQueue, playSongs } from "../../service/SpotifyApiService";
+import { addToQueue } from "../../service/SpotifyApiService";
 import { PiQueueFill } from 'react-icons/pi/index';
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
     const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
+    const playTrack = props.playTrack;
     const { setRefreshQueue } = props;
 
     const getArtists = () => {
@@ -59,7 +60,7 @@ export const TrackRow = (props : any) => {
     }
 
     return (
-        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => playSongs([track.uri])}>
+        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => playTrack(track.uri)}>
             <div className="flex flex-col col-span-4">
                 <span className="text-primary text-xl">{track.name}</span>
                 <span className="text-primary200">{getArtists()}</span>

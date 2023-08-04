@@ -6,6 +6,7 @@ import { usePlaylistSavedTracks } from "../../hooks/usePlaylistSavedTracks";
 import { usePlaylistTracks } from "../../hooks/usePlaylistTracks";
 import { useParams } from "react-router-dom";
 import { useQueue } from "../../hooks/useQueue";
+import { play } from "../../service/SpotifyApiService";
 
 export const PlaylistView = () => {
 
@@ -32,11 +33,22 @@ export const PlaylistView = () => {
         }
     }, [playlistTracks]);
 
+    const playTrack = async (trackURI : string) => {
+        await play(playlist.uri, playlistTracks?.items.map(trackObject => trackObject.track.uri), trackURI);
+        setRefreshQueue((refresh : boolean) => !refresh);
+    }
+
     return (
         <div className="max-h-full overflow-y-scroll">
             <div className="flex flex-col">
                 {trackData.map((trackItem : PlaylistTrackObject, index : number) => 
-                    <TrackRow key={index} addedAt={trackItem.added_at} track={trackItem.track} saved={savedTracks.length > 0 ? savedTracks[index] : false} setRefreshQueue={setRefreshQueue} />
+                    <TrackRow 
+                        key={index} 
+                        addedAt={trackItem.added_at} 
+                        track={trackItem.track} 
+                        saved={savedTracks.length > 0 ? savedTracks[index] : false} 
+                        setRefreshQueue={setRefreshQueue} 
+                        playTrack={playTrack} />
                 )}
             </div>
         </div>

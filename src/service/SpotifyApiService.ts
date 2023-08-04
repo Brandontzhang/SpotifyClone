@@ -11,15 +11,19 @@ export const setRepeat = (state : string) => {
     });
 }
 
-export const playSongs = (songURIs : string[]) => {
+export const play = (contextURI : string, trackURIs? : string[], offset? : string | number) => {
     // TODO : whenever we add a song, add the songs from the playlist be played as well (should add to the queue?)
-    return fetch(`http://localhost:5000/me/player/track`, {
+    return fetch(`http://localhost:5000/me/player/play`, {
         method : "PUT",
         mode: "cors", 
         headers: {
             "Content-Type": "application/json",
         },
-        body : JSON.stringify(songURIs)
+        body : JSON.stringify({
+            contextURI : contextURI,
+            uris : trackURIs ? trackURIs : [],
+            offset : offset ? offset : 0
+        })
     });
 }
 
