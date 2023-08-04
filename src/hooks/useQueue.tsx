@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePlaybackState, useSpotifyPlayer } from "react-spotify-web-playback-sdk";
+import { usePlaybackState, usePlayerDevice } from "react-spotify-web-playback-sdk";
 import { fetchQueue } from "../service/SpotifyApiService";
 
 export const useQueue = () => {
@@ -9,7 +9,7 @@ export const useQueue = () => {
     const [error, setError] = useState<any>();
 
     const playbackState = usePlaybackState(true, 100);
-    const player = useSpotifyPlayer();
+    const playerDevice = usePlayerDevice();
 
     const fetchData = async () => {
         try {
@@ -26,15 +26,19 @@ export const useQueue = () => {
 
     // Initial fetch on the page load
     useEffect(() => {
-        setIsLoading(true);
-        fetchData();
+        setTimeout(() => {
+            setIsLoading(true);
+            fetchData()
+        }, 500);
     }, []);
 
-    // TODO: Currently querying every instant, change to query only when song is changed
+    // TODO: I NEED TO FIND WHAT THIS DEPENDS ONNNN
     useEffect(() => {
-        setIsLoading(true);
-        fetchData();
-    }, [playbackState?.context.metadata?.current_item.uid])
+        setTimeout(() => {
+            setIsLoading(true);
+            fetchData()
+        }, 100);
+    }, [playerDevice, playbackState?.paused, playbackState?.playback_id])
     
     return { isLoading, queueData, error };
 }

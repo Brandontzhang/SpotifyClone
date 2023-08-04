@@ -1,6 +1,7 @@
 import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
-import { playSongs } from "../../service/SpotifyApiService";
+import { addToQueue, playSongs } from "../../service/SpotifyApiService";
+import { PiQueueFill } from 'react-icons/pi/index';
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
@@ -50,6 +51,11 @@ export const TrackRow = (props : any) => {
         }
     }
 
+    const addQueueClick = (e : any) => {
+        e.stopPropagation();
+        addToQueue(track.uri);
+    }
+
     return (
         <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => playSongs([track.uri])}>
             <div className="flex flex-col col-span-4">
@@ -64,6 +70,7 @@ export const TrackRow = (props : any) => {
             </div>
             <div className="flex flex-row col-span-1 items-center justify-center">
                 {saved ? <span className="fill-highlight"><Heart /></span> : <div></div>}
+                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><PiQueueFill /></span>
             </div>
             <div className="flex flex-row col-span-1 items-center justify-center">
                 <span className="text-primary text-xl">{getDuration()}</span>

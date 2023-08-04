@@ -8,7 +8,7 @@ import { Forward, Rewind } from "../../assets";
 import { TokenContext } from "../../context/TokenContext";
 import { setRepeat } from "../../service/SpotifyApiService";
 
-export const PlayBar = (props : any) => {
+export const PlayBar = () => {
 
     const webPlaybackSDKReady = useWebPlaybackSDKReady();
     const player = useSpotifyPlayer();

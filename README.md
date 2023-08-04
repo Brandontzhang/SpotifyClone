@@ -19,20 +19,15 @@ Side Nav (Comp)
     - Songs
     - Playlists
 
-Clean Up
-- move Spotify API calls into its own service
-    - Whenever a call is made to the service to play a song or update queue, changes a flag to update the queue
-    - useQueue will have a useEffect watching that flag to check for updates
-
-- Add song to liked list (saved song)
-    - svg update
-    - api action
-    - click trigger
-
-
-Refactoring
+Refactoring (Comp 8/3)
 - move all server calls into a service file
 - create custom hooks for any API calls
+
+Fix Queue
+- 10 items showing up for some reason
+- no items showing up
+- update?
+- add to queue action
 
 Action Menu
 - home screen

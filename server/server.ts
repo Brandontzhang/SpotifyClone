@@ -222,7 +222,7 @@ app.post('/player/queue', (req : Request, res : Response) => {
  */
 app.post('/me/playlist/contains', (req : Request, res : Response) => {
     let songIds = req.body;
-    request.get(getSpotifyAPIAuthOptions(`v1/me/tracks/contains?ids=${songIds.join(',')}`), function(error, response, body){
+    request.get(getSpotifyAPIAuthOptions(`v1/me/tracks/contains?ids=${songIds.join(',')}`), function(error, response, body) {
         if (!error && response.statusCode === 200) {
             res.send(body);
         } else {
@@ -239,9 +239,28 @@ app.post('/me/playlist/contains', (req : Request, res : Response) => {
  * Gets the users queue
  */
 app.get('/me/player/queue', (_req : Request, res : Response) => {
-    request.get(getSpotifyAPIAuthOptions(`v1/me/player/queue`), function(error, response, body){
+    request.get(getSpotifyAPIAuthOptions(`v1/me/player/queue`), function(error, response, body) {
         if (!error && response.statusCode === 200) {
             res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
+
+/**
+ * Add a song to the end of the queue
+ */
+app.post('/me/player/queue/:songuri', (req : Request, res : Response) => {
+    let songURI = req.params.songuri;
+
+    request.post(getSpotifyAPIAuthOptions(`v1/me/player/queue?uri=${songURI}`), function(error, response) {
+        if (!error && response.statusCode === 204) {
+            res.sendStatus(response.statusCode);
         } else {
             if (response) {
                 res.sendStatus(response.statusCode);

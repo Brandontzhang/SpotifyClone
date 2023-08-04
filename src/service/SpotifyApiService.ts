@@ -57,3 +57,16 @@ export const fetchQueue = async () : Promise<any> => {
 
     return data;
 }
+
+export const addToQueue = async (songURI : string) : Promise<any> => {
+    const response = await fetch(`http://localhost:5000/me/player/queue/${songURI}`, {
+        method : "POST",
+        mode: "cors", 
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const status = await response.json();
+
+    return status;
+}

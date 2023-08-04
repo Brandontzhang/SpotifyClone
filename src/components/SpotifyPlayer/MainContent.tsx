@@ -6,10 +6,9 @@ import { PlaylistContext } from "../../context/PlayListContext";
 import { Playlist } from "../../types/PlaylistTypes";
 import { useState } from "react";
 
-export const MainContent = (props : any) => {
+export const MainContent = () => {
 
     const [playlist, setPlaylist] = useState<Playlist>({} as Playlist);
-    const initialVolume = props.initialvolume;
     
     return (
         <div className="h-full flex-col justify-between">
@@ -30,7 +29,7 @@ export const MainContent = (props : any) => {
                 </PlaylistContext.Provider>
             </div>
             <div className="flex justify-center items-center h-[28%]">
-                <PlayBar initialVolume={initialVolume}/>
+                <PlayBar />
             </div>
         </div>
     )
