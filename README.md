@@ -23,18 +23,17 @@ Refactoring (Comp 8/3)
 - move all server calls into a service file
 - create custom hooks for any API calls
 
-Fix Queue
+Fix Queue (comp 8/4)
 - 10 items showing up for some reason
 - no items showing up
 - update?
 - add to queue action
+- Add song to queue
+- Edit queue (can't do, no API endpoint available)
 
 Action Menu
-- home screen
+- home screen (comp 8/4)
 - search screen
-
-- Add song to queue
-- Edit queue
 
 - navigation buttons (back and forward)
 
@@ -51,7 +50,6 @@ Home Screen
 Artist box
 - Keep size small
 - hover to scroll through name
-
 
 Pulldown Spotify playlist information
 - display playlist blocks
