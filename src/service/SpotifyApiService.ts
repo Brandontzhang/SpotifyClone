@@ -23,6 +23,13 @@ export const playSongs = (songURIs : string[]) => {
     });
 }
 
+export const getSavedTracks = async () => {
+    const response = await fetch(`http://localhost:5000/me/tracks`);
+    const data = await response.json();
+
+    return data;
+}
+
 export const fetchPlaylistData = async (playlistId : string) : Promise<TrackPage> => {
     const response = await fetch(`http://localhost:5000/playlist/${playlistId}/tracks`)
     const data = await response.json();
@@ -66,7 +73,14 @@ export const addToQueue = async (songURI : string) : Promise<any> => {
             "Content-Type": "application/json",
         },
     });
-    const status = await response.json();
+    const status = await response.status;
 
     return status;
+}
+
+export const search = async (query : string, types : string[]) : Promise<any> => {
+    const response = await fetch(`http://localhost:5000/search/${query}/${types.join(",")}`);
+    const data = await response.json();
+    
+    return data;
 }

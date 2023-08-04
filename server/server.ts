@@ -32,7 +32,7 @@ const generateRandomString = (length : number) => {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
-}
+};
 
 const getSpotifyAPIAuthOptions = (url : string) => {
     let {access_token, token_type} = token_info;
@@ -44,7 +44,7 @@ const getSpotifyAPIAuthOptions = (url : string) => {
     }
 
     return authOptions;
-}
+};
 
 /**
  * Sends request to Spotify Authorization in order to receive token
@@ -53,6 +53,7 @@ app.get('/auth/login', (_req : Request, res : Response) => {
     var scope = "streaming \
                user-read-email \
                user-read-private \
+               user-library-read \
                user-read-playback-state \
                user-modify-playback-state \
                playlist-read-private \
@@ -168,7 +169,7 @@ app.put('/me/player/track', (req : Request, res : Response) => {
             }
         }
     })
-})
+});
 
 /**
  * Get a playlist owned by a Spotify User
@@ -181,7 +182,23 @@ app.get('/playlists', (_req : Request, res : Response) => {
             res.send(response);
         }
       });
+});
 
+/**
+ * Get saved tracks
+ */
+app.get('/me/tracks', (_req : Request, res : Response) => {
+    request.get(getSpotifyAPIAuthOptions('v1/me/tracks'), function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
 });
 
 /**
@@ -195,7 +212,7 @@ app.get('/playlist/:playlistid/tracks', (req : Request, res : Response) => {
             res.send(response);
         }
     });
-})
+});
 
 /**
  * Add a song to the playback queue
@@ -214,7 +231,7 @@ app.post('/player/queue', (req : Request, res : Response) => {
             }
         }
     });
-})
+});
 
 /**
  * Check if the given list of songs are in the playlist 
@@ -233,7 +250,7 @@ app.post('/me/playlist/contains', (req : Request, res : Response) => {
             }
         }
     })
-})
+});
 
 /**
  * Gets the users queue
@@ -250,7 +267,7 @@ app.get('/me/player/queue', (_req : Request, res : Response) => {
             }
         }
     })
-})
+});
 
 /**
  * Add a song to the end of the queue
@@ -269,7 +286,7 @@ app.post('/me/player/queue/:songuri', (req : Request, res : Response) => {
             }
         }
     })
-})
+});
 
 /**
  * Set player to repeat
@@ -292,7 +309,28 @@ app.put('/me/player/repeat', (req : Request, res : Response) => {
             }
         }
     })
-})
+});
+
+/**
+ * Search request
+ */
+app.get('/search/:query/:type', (req : Request, res : Response) => {
+    console.log(req.params)
+    let q = req.params.query;
+    let type = req.params.type;
+
+    request.get(getSpotifyAPIAuthOptions(`v1/search?q=${q}&type=${type}`), function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+});
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
