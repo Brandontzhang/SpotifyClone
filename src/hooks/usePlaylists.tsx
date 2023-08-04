@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import { Playlist } from "../types/PlaylistTypes";
+import { fetchPlaylists } from "../service/SpotifyApiService";
 
 const usePlaylists = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<any>(null);
     const [serverError, setServerError] = useState<any>(null);
 
-    const fetchPlaylists = async () => {
+    const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:5000/playlists');
-            const data = await response.json();
+            const playlistData : Playlist[] = await fetchPlaylists();
 
-            setData(data);
+            setData(playlistData);
             setIsLoading(false);
         } catch (error : any) {
             setServerError(error);
@@ -20,7 +21,7 @@ const usePlaylists = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetchPlaylists();
+        fetchData();
     }, []);
 
     return { isLoading, data, serverError};

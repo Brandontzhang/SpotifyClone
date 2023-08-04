@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PlaylistTrackObject } from "../types/TrackTypes";
+import { fetchPlaylistsSavedTracks } from "../service/SpotifyApiService";
 
 /**
  * Checks if the tracks have been saved (liked) by the user
@@ -11,7 +12,7 @@ export const usePlaylistSavedTracks = (trackItems : PlaylistTrackObject[]) => {
     const [savedTracks, setSavedTracks] = useState<boolean[]>([]);
     const [serverError, setServerError] = useState<any>(null);
 
-    const fetchPlaylistSavedTracks = async () => {
+    const fetchData = async () => {
         let trackIds = trackItems.map(trackItem => trackItem.track.id);
 
         if (trackIds.length === 0) {
@@ -20,17 +21,9 @@ export const usePlaylistSavedTracks = (trackItems : PlaylistTrackObject[]) => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/me/playlist/contains', {
-                method : "POST",
-                mode: "cors", 
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body : JSON.stringify(trackIds)
-            });
-            const data = await response.json();
+            const playlistSavedTracks = await fetchPlaylistsSavedTracks(trackIds);
 
-            setSavedTracks(data);
+            setSavedTracks(playlistSavedTracks);
             setIsLoading(false);
         } catch (error : any) {
             setServerError(error);
@@ -40,7 +33,7 @@ export const usePlaylistSavedTracks = (trackItems : PlaylistTrackObject[]) => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetchPlaylistSavedTracks();
+        fetchData();
     }, [trackItems]);
 
     return {isLoading, savedTracks, serverError}

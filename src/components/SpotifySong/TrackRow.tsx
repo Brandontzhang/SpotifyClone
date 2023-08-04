@@ -1,21 +1,11 @@
 import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
+import { playSongs } from "../../service/SpotifyApiService";
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
     const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
-
-    const play = async (songURI : string) => {
-        await fetch(`http://localhost:5000/me/player/track`, {
-            method : "PUT",
-            mode: "cors", 
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body : JSON.stringify([songURI])
-        })
-    }
 
     const getArtists = () => {
         let artists = track.artists;
@@ -61,7 +51,7 @@ export const TrackRow = (props : any) => {
     }
 
     return (
-        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => play(track.uri)}>
+        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => playSongs([track.uri])}>
             <div className="flex flex-col col-span-4">
                 <span className="text-primary text-xl">{track.name}</span>
                 <span className="text-primary200">{getArtists()}</span>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TrackPage } from "../types/PlaylistTypes";
+import { fetchPlaylistData } from "../service/SpotifyApiService";
 
 /**
  * Returns the track page item based on playlist id provided
@@ -11,13 +12,16 @@ export const usePlaylistTracks = (playlistId? : string) => {
     const [playlistTracks, setPlaylistTracks] = useState<TrackPage>();
     const [error, setError] = useState<any>();
 
-    const fetchPlaylistData = async () => {
+    const fetchData = async () => {
+        if (!playlistId) {
+            return;
+        }
+
         try {
-            const response = await fetch(`http://localhost:5000/playlist/${playlistId}/tracks`)
-            const data = await response.json();
+            const trackPage = await fetchPlaylistData(playlistId);
 
             setIsLoading(false);
-            setPlaylistTracks(data);
+            setPlaylistTracks(trackPage);
         } catch (error) {
             setIsLoading(false);
             setError(error);
@@ -25,12 +29,8 @@ export const usePlaylistTracks = (playlistId? : string) => {
     }
 
     useEffect(() => {
-        if (!playlistId) {
-            return;
-        }
-
         setIsLoading(true);
-        fetchPlaylistData()
+        fetchData()
     }, [playlistId]);
 
     return { isLoading, playlistTracks, error };
