@@ -148,18 +148,23 @@ app.get('/logout', (_req : Request, res : Response) => {
 /**
  * Play array of songs given
  */
-app.put('/me/player/track', (req : Request, res : Response) => {
-    let trackURIs = req.body;
+app.put('/me/player/play', (req : Request, res : Response) => {
+    let contextURI = req.body.context; // playlist, artists, or albums
+    let uris = req.body.uris; // tracks to play
+    let offset = req.body.offset; // track to start at
 
     let authOptions = {
         ...getSpotifyAPIAuthOptions('v1/me/player/play'),
         body :  {
-            uris: trackURIs
+            context_uri : contextURI,
+            uris : uris,
+            offset : {"uri" : offset},
+            position_ms : 0
         }
     }
 
     request.put(authOptions, function(error, response) {
-        if (!error && response.statusCode === 204) {
+        if (!error && response.statusCode === 202) {
             res.sendStatus(200);
         } else {
             if (response) {
@@ -315,7 +320,6 @@ app.put('/me/player/repeat', (req : Request, res : Response) => {
  * Search request
  */
 app.get('/search/:query/:type', (req : Request, res : Response) => {
-    console.log(req.params)
     let q = req.params.query;
     let type = req.params.type;
 
