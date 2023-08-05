@@ -14,7 +14,7 @@ const Playlists = () => {
     }, [data])
 
     return (
-        <div className="max-h-full overflow-y-scroll">
+        <div className="h-[100%] overflow-y-scroll">
             <div className="grid grid-cols-4">
                 { playlists.map((pl : Playlist) => 
                     <PlaylistCard key={pl.snapshot_id} playlist={pl} />

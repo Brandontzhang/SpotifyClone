@@ -1,10 +1,11 @@
 import { PlayBar } from "./PlayBar";
 import Playlists from "../SpotifyPlaylist/Playlists";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { PlaylistView } from "../SpotifyPlaylist/PlaylistView";
 import { PlaylistContext } from "../../context/PlayListContext";
 import { Playlist } from "../../types/PlaylistTypes";
 import { useState } from "react";
+import { SearchResults } from "../SearchResults/SearchResults";
 
 export const MainContent = () => {
 
@@ -15,14 +16,9 @@ export const MainContent = () => {
             <div className="h-[80%] max-h-[70vh]">
                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
                         <Routes>
-                            <Route path="/" element={
-                                <Playlists/>
-                            }>
-                            </Route>
-                            <Route path="/playlist/:playlistId" element={
-                                <PlaylistView />
-                            }>
-                            </Route>
+                            <Route path="/" element={<Playlists/>} />
+                            <Route path="/search" element={<SearchResults />} />
+                            <Route path="/playlist/:playlistId" element={<PlaylistView />} />
                         </Routes>
                 </PlaylistContext.Provider>
             </div>

@@ -1,20 +1,23 @@
-import { PlaylistTrackObject } from "./TrackTypes";
+import { PlaylistTrackObject, Track } from "./TrackTypes";
 
-export type Playlist = {
+export type Playlist = SimplifiedPlaylistObject & {
+    primary_color : string;
+}
+
+export type SimplifiedPlaylistObject = {
     collaborative : boolean;
     description : string;
     external_urls : ExternalURL;
     href : string;
     id : string;
-    images : [Image];
+    images : Image[];
     name : string;
-    owner : Person;
-    primary_color : string;
+    owner : string;
     public : boolean;
     snapshot_id : string;
     tracks : TrackPage;
     type : string;
-    uri : string;
+    uri : string
 }
 
 export type Image = {
