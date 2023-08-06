@@ -48,7 +48,8 @@ export const PlaylistView = () => {
                         track={trackItem.track} 
                         saved={savedTracks.length > 0 ? savedTracks[index] : false} 
                         setRefreshQueue={setRefreshQueue} 
-                        playTrack={playTrack} />
+                        playTrack={playTrack} 
+                        mode={'playlist'}/>
                 )}
             </div>
         </div>

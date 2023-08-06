@@ -8,7 +8,7 @@ export const TrackRow = (props : any) => {
     const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
     const playTrack = props.playTrack;
-    const { setRefreshQueue } = props;
+    const { setRefreshQueue, mode } = props;
 
     const getArtists = () => {
         let artists = track.artists;
@@ -68,13 +68,16 @@ export const TrackRow = (props : any) => {
             <div className="flex flex-col col-span-2 justify-center">
                 <span className="text-primary text-xl">{track.album.name}</span>
             </div>
-            <div className="flex flex-col col-span-2 justify-center">
-                <span className="text-primary text-xl">{getAddedAtDisplay()}</span>
-            </div>
+            {mode == 'playlist' ? 
+                <div className="flex flex-col col-span-2 justify-center">
+                    <span className="text-primary text-xl">{getAddedAtDisplay()}</span>
+                </div> :
+                <div className="col-span-2"></div>
+            }
             <div className="flex flex-row col-span-1 items-center justify-center">
-                {saved ? <span className="fill-highlight"><Heart /></span> : <div></div>}
+                {mode == 'playlist' ? saved ? <span className="fill-highlight"><Heart /></span> : <></> : <></>}
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><PiQueueFill /></span>
-            </div>
+            </div> 
             <div className="flex flex-row col-span-1 items-center justify-center">
                 <span className="text-primary text-xl">{getDuration()}</span>
             </div>

@@ -153,14 +153,31 @@ app.put('/me/player/play', (req : Request, res : Response) => {
     let uris = req.body.uris; // tracks to play
     let offset = req.body.offset; // track to start at
 
-    let authOptions = {
-        ...getSpotifyAPIAuthOptions('v1/me/player/play'),
-        body :  {
+    let body = {}
+
+    if (contextURI == "playlist") {
+        body = {
             context_uri : contextURI,
             uris : uris,
             offset : {"uri" : offset},
             position_ms : 0
         }
+    } else if (contextURI == "album") {
+        body = {
+            context_uri : contextURI,
+            uris : uris,
+            offset : {"uri" : offset},
+            position_ms : 0
+        }
+    } else {
+        body = {
+            uris : uris,
+        }
+    }
+
+    let authOptions = {
+        ...getSpotifyAPIAuthOptions('v1/me/player/play'),
+        body : body
     }
 
     request.put(authOptions, function(error, response) {
@@ -168,6 +185,7 @@ app.put('/me/player/play', (req : Request, res : Response) => {
             res.sendStatus(200);
         } else {
             if (response) {
+                console.log(response);
                 res.sendStatus(response.statusCode);
             } else {
                 res.send(error);
