@@ -14,7 +14,6 @@ export const TrackResults = () => {
 
     useEffect(() => {
         if (tracks) {
-            console.log(tracks.items);
             setListItems(tracks.items);
         }
     }, [tracks]);
@@ -26,7 +25,19 @@ export const TrackResults = () => {
 
     return (
         <div className="flex flex-col">
-            <span>Songs</span>
+            <div className="grid grid-cols-10 mx-2 px-8">
+                <div className="col-span-4">
+                    Name / Artist
+                </div>
+                <div className="col-span-2 pl">
+                    Album
+                </div>
+                <div className="col-span-3"></div>
+                <div className="flex col-span-1 items-center justify-center">
+                    Duration
+                </div>
+
+            </div>
             { listItems.map((track : Track, index : number) => 
                 <TrackRow 
                     key={index}

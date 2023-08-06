@@ -155,14 +155,7 @@ app.put('/me/player/play', (req : Request, res : Response) => {
 
     let body = {}
 
-    if (contextURI == "playlist") {
-        body = {
-            context_uri : contextURI,
-            uris : uris,
-            offset : {"uri" : offset},
-            position_ms : 0
-        }
-    } else if (contextURI == "album") {
+    if (contextURI != "") {
         body = {
             context_uri : contextURI,
             uris : uris,

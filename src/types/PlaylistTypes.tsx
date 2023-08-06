@@ -12,7 +12,7 @@ export type SimplifiedPlaylistObject = {
     id : string;
     images : Image[];
     name : string;
-    owner : string;
+    owner : Person;
     public : boolean;
     snapshot_id : string;
     tracks : TrackPage;
