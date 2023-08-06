@@ -33,12 +33,17 @@ Fix Queue (comp 8/4)
 
 Action Menu
 - home screen (comp 8/4)
-- search screen
+- search screen (comp 8/6)
+
+- highlight current song <--------------------------------------------------
 
 - navigation buttons (back and forward)
 
+- view Artist/Album
+- pagination for search results
+
 Manipulate playlist (next songs)
-- loop (repeat)
+- loop (repeat) (comp)
 - shuffle?
 
 UI
