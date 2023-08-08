@@ -3,13 +3,13 @@ import Playlists from "../SpotifyPlaylist/Playlists";
 import { Routes, Route } from "react-router-dom";
 import { PlaylistView } from "../SpotifyPlaylist/PlaylistView";
 import { PlaylistContext } from "../../context/PlayListContext";
-import { Playlist } from "../../types/PlaylistTypes";
+import { Playlist, SimplifiedPlaylistObject } from "../../types/PlaylistTypes";
 import { useState } from "react";
 import { SearchResults } from "../SearchResults/SearchResults";
 
 export const MainContent = () => {
 
-    const [playlist, setPlaylist] = useState<Playlist>({} as Playlist);
+    const [playlist, setPlaylist] = useState<Playlist | SimplifiedPlaylistObject>({} as Playlist);
     
     return (
         <div className="h-full flex-col justify-between">
