@@ -35,16 +35,23 @@ Action Menu
 - home screen (comp 8/4)
 - search screen (comp 8/6)
 
-- highlight current song <--------------------------------------------------
+- highlight current song 
 
-- navigation buttons (back and forward)
+- navigation buttons (back and forward) 
+
+- Discover weekly 
+- Custom for liked songs <--------------------------------------------------
+- Add in pagination
+
+- View recently listened
 
 - view Artist/Album
-- pagination for search results
 
 Manipulate playlist (next songs)
 - loop (repeat) (comp)
 - shuffle?
+
+Custom create recommendation !!!!
 
 UI
 - playlist header

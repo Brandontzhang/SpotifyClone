@@ -347,6 +347,23 @@ app.get('/search/:query/:type', (req : Request, res : Response) => {
     })
 });
 
+/**
+ * Get user's saved tracks
+ */
+app.get('/me/tracks', (_req : Request, res : Response) => {
+    request.get(getSpotifyAPIAuthOptions('/v1/me/tracks'), function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
 });

@@ -41,6 +41,19 @@ export const fetchPlaylistData = async (playlistId : string) : Promise<TrackPage
     return data;
 }
 
+export const getLikedSongs = async () : Promise<Playlist> => {
+    const response = await fetch(`http://localhost:5000/me/tracks`);
+    const data = await response.json();
+
+    return data;
+}
+
+export const getDiscoverWeekly = async () : Promise<Playlist> => {
+    const data = await search("Discover Weekly", ['playlist']);
+
+    return data.playlists.items[0];
+}
+
 export const fetchPlaylists = async () : Promise<Playlist[]> => {
     const response = await fetch('http://localhost:5000/playlists');
     const data = await response.json();
