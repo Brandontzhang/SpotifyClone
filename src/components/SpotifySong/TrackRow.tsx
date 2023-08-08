@@ -2,6 +2,8 @@ import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
 import { addToQueue } from "../../service/SpotifyApiService";
 import { PiQueueFill } from 'react-icons/pi/index';
+import { useContext } from "react";
+import { QueueContext } from "../../context/QueueContext";
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
@@ -9,6 +11,8 @@ export const TrackRow = (props : any) => {
     const addedAt : string = props.addedAt;
     const playTrack = props.playTrack;
     const { setRefreshQueue, mode } = props;
+
+    const { currentlyPlaying } = useContext(QueueContext);
 
     const getArtists = () => {
         let artists = track.artists;
@@ -60,10 +64,10 @@ export const TrackRow = (props : any) => {
     }
 
     return (
-        <div className="grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer" key={track.id} onClick={() => playTrack(track.uri)}>
+        <div className={`${currentlyPlaying?.id == track.id ? 'text-highlight' : 'text-primary'} grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer`} key={track.id} onClick={() => playTrack(track.uri)}>
             <div className="flex flex-col col-span-4">
-                <span className="text-primary text-xl">{track.name}</span>
-                <span className="text-primary200">{getArtists()}</span>
+                <span className="text-xl">{track.name}</span>
+                <span>{getArtists()}</span>
             </div>
             <div className="flex flex-col col-span-2 justify-center">
                 <span className="text-primary text-xl">{track.album.name}</span>
