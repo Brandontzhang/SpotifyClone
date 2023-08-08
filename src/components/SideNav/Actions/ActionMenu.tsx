@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AiFillHome } from "react-icons/ai"
 import { BiSearch, BiSolidSearch } from "react-icons/bi"
+import { TbCircleArrowLeft, TbCircleArrowRight } from "react-icons/tb"
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { search } from "../../../service/SpotifyApiService";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,9 +51,15 @@ export const ActionMenu = () => {
     return (
         <div className="flex justify-center h-full">
             <div className="flex flex-col justify-around h-full text-primary text-xl w-11/12">
-                <div className="flex flex-row items-center text-2xl hover:text-highlight hover:cursor-pointer">
-                    <span className="pl-2"><AiFillHome /></span>
-                    <span className="pl-2"><Link to={'/'}>Home</Link></span>
+                <div className="flex flex-row items-center justify-between text-2xl">
+                    <div className="flex flex-row hover:text-highlight hover:cursor-pointer">
+                        <span className="pl-2 pt-1"><AiFillHome /></span>
+                        <span className="pl-2"><Link to={'/'}>Home</Link></span>
+                    </div>
+                    <div className="flex flex-row">
+                        <span className="p-2 hover:text-highlight hover:cursor-pointer" onClick={() => navigate(-1)}><TbCircleArrowLeft /></span>
+                        <span className="p-2 hover:text-highlight hover:cursor-pointer" onClick={() => navigate(1)}><TbCircleArrowRight /></span>
+                    </div>
                 </div>
                 <div>
                     <form onSubmit={(event) => {sendQuery(event)}}>
