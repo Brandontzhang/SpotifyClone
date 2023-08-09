@@ -1,4 +1,5 @@
 import { Playlist, TrackPage } from "../types/PlaylistTypes";
+import { Track } from "../types/TrackTypes";
 
 export const setRepeat = (state : string) => {
     return fetch(`http://localhost:5000/me/player/repeat`, {
@@ -41,7 +42,7 @@ export const fetchPlaylistData = async (playlistId : string) : Promise<TrackPage
     return data;
 }
 
-export const getLikedSongs = async () : Promise<Playlist> => {
+export const getLikedSongs = async () : Promise<TrackPage> => {
     const response = await fetch(`http://localhost:5000/me/tracks`);
     const data = await response.json();
 

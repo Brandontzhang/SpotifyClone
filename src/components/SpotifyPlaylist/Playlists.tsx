@@ -3,11 +3,12 @@ import { PlaylistCard } from "./PlaylistCard";
 import { Playlist } from "../../types/PlaylistTypes";
 import { useEffect, useState } from "react";
 import { useDiscoverWeekly } from "../../hooks/useDiscoverWeekly";
+import { LikedSongsPlaylistCard } from "./LikedSongs/LikedSongsPlaylistCard";
 
 const Playlists = () => {
     const { data }= usePlaylists();
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
-    const { discoverWeekly } = useDiscoverWeekly();
+    const { discoverWeekly, isLoading } = useDiscoverWeekly();
 
     useEffect(() => {
         if (data) {
@@ -15,13 +16,14 @@ const Playlists = () => {
         }
     }, [data])
 
-
-
     return (
         <div className="h-[100%] overflow-y-scroll">
             <div className="grid grid-cols-4"> 
+                <div className={`${isLoading} load`}>
+                    <PlaylistCard playlist={discoverWeekly}/>
+                </div>
                 <div>
-                    {discoverWeekly ? <PlaylistCard playlist={discoverWeekly}/> : <></>}
+                    {isLoading ? <PlaylistCard playlist={discoverWeekly}/> : <LikedSongsPlaylistCard />}
                 </div>
             </div>
             <div className="grid grid-cols-4">

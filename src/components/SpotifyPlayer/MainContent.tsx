@@ -6,6 +6,7 @@ import { PlaylistContext } from "../../context/PlayListContext";
 import { Playlist, SimplifiedPlaylistObject } from "../../types/PlaylistTypes";
 import { useState } from "react";
 import { SearchResults } from "../SearchResults/SearchResults";
+import { LikedSongs } from "../SpotifyPlaylist/LikedSongs/LikedSongs";
 
 export const MainContent = () => {
 
@@ -19,6 +20,7 @@ export const MainContent = () => {
                             <Route path="/" element={<Playlists/>} />
                             <Route path="/search" element={<SearchResults />} />
                             <Route path="/playlist/:playlistId" element={<PlaylistView />} />
+                            <Route path="/playlist/likedsongs" element={<LikedSongs />} />
                         </Routes>
                 </PlaylistContext.Provider>
             </div>

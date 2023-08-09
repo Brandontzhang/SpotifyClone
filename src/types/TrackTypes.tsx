@@ -40,3 +40,18 @@ export type Album = {
     type : string;
     uri : string;
 }
+
+export type TrackData = {
+    href : string;
+    limit : number;
+    next : string;
+    offset : string;
+    previous : string;
+    total : number;
+    items : SavedTrackObject[];
+}
+
+export type SavedTrackObject = {
+    added_at : string;
+    track : Track;
+}
