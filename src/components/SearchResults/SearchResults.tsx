@@ -4,15 +4,20 @@ import { TrackResults } from "./TrackResults";
 import { ArtistResults } from "./ArtistResults";
 import { AlbumResults } from "./AlbumResults";
 import { PlaylistResults } from "./PlaylistResults";
+import { useNavigate } from "react-router-dom";
 
 export const SearchResults = () => {
 
-    const { tracks, albums, artists, playlists } = useContext(SearchResultsContext);
+    const { tracks } = useContext(SearchResultsContext);
 
     const [mode, setMode] = useState('tracks');
+    const navigate = useNavigate();
 
     useEffect(() => {
-    }, [tracks, albums, artists, playlists]);
+        if (!tracks) {
+            navigate("/");
+        }
+    }, [tracks]);
 
     return (
         <div className="h-[100%] overflow-y-hidden text-primary">
