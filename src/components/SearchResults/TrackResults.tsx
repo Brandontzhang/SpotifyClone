@@ -24,7 +24,7 @@ export const TrackResults = () => {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="h-[55vh] xl:h-[60vh] overflow-y-scroll flex flex-col">
             <div className="grid grid-cols-10 mx-2 px-8">
                 <div className="col-span-4">
                     Name / Artist

@@ -15,7 +15,7 @@ export const ArtistResults = () => {
     }, [artists]);
 
     return (
-        <div className="grid grid-cols-4 place-items-center">
+        <div className="h-[55vh] xl:h-[60vh] overflow-y-scroll grid grid-cols-4 place-items-center">
             {
                 gridItems.map(artist => 
                     <div className="flex flex-col justify-center items-center bg-background100 h-fit w-fit rounded-lg m-4">

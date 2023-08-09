@@ -18,7 +18,7 @@ export const PlaylistResults = () => {
 
 
     return (
-        <div>
+        <div className="h-[55vh] xl:h-[60vh] overflow-y-scroll ">
             <div className="grid grid-cols-7">
                     <div className="col-span-1"></div>
                     <span className="flex justify-start items-center col-span-4">Name</span>
