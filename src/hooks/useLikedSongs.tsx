@@ -6,13 +6,30 @@ export const useLikedSongs = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [likedSongs, setLikedSongs] = useState<TrackPage>();
     const [serverError, setServerError] = useState<any>(null);
-
+    const [offset, setOffset] = useState(0);
 
     const fetchData = async () => {
         try {
-            const data : TrackPage = await getLikedSongs();
+            const newData : TrackPage = await getLikedSongs(offset);
+            setLikedSongs(prevLikedSongs => {
 
-            setLikedSongs(data);
+                if (!prevLikedSongs) {
+                    return newData;
+                }
+
+                let combinedLikedSongs = {
+                    ...prevLikedSongs,
+                    next : newData.next,
+                    offset : newData.offset,
+                    previous : newData.previous,
+                    items : [
+                        ...prevLikedSongs.items,
+                        ...newData.items
+                    ]
+                }
+
+                return combinedLikedSongs;
+            });
             setIsLoading(false);
         } catch (error : any) {
             setServerError(error);
@@ -23,7 +40,7 @@ export const useLikedSongs = () => {
     useEffect(() => {
         setIsLoading(true);
         fetchData();
-    }, []);
+    }, [offset]);
 
-    return { isLoading, likedSongs, serverError};
+    return { isLoading, likedSongs, serverError, setOffset};
 }
