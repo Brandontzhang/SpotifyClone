@@ -11,6 +11,7 @@ export const usePlaylistTracks = (playlistId? : string) => {
     const [isLoading, setIsLoading] = useState(false);
     const [playlistTracks, setPlaylistTracks] = useState<TrackPage>();
     const [error, setError] = useState<any>();
+    const [offset, setOffset] = useState(0);
 
     const fetchData = async () => {
         if (!playlistId) {
@@ -18,10 +19,32 @@ export const usePlaylistTracks = (playlistId? : string) => {
         }
 
         try {
-            const trackPage = await fetchPlaylistData(playlistId);
+            const trackPage = await fetchPlaylistData(playlistId, offset);
 
             setIsLoading(false);
-            setPlaylistTracks(trackPage);
+            if (trackPage.items.length === 0) {
+                setOffset(-1);
+                return;
+            }
+            setPlaylistTracks(prevTrackPage => {
+                if (!prevTrackPage) {
+                    return trackPage;
+                }
+
+                let combinedTrackPage = {
+                    ...prevTrackPage,
+                    next: trackPage.next,
+                    offset : trackPage.offset,
+                    previous : trackPage.previous,
+                    items : [
+                        ...prevTrackPage.items,
+                        ...trackPage.items
+                    ]
+                }
+
+                return combinedTrackPage;
+            })
+
         } catch (error) {
             setIsLoading(false);
             setError(error);
@@ -29,9 +52,12 @@ export const usePlaylistTracks = (playlistId? : string) => {
     }
 
     useEffect(() => {
+        if (offset === -1) {
+            return;
+        }
         setIsLoading(true);
         fetchData()
-    }, [playlistId]);
+    }, [playlistId, offset]);
 
-    return { isLoading, playlistTracks, error };
+    return { isLoading, playlistTracks, error, setOffset };
 }

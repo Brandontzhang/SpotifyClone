@@ -4,11 +4,12 @@ import { play } from "../../../service/SpotifyApiService";
 import { PlaylistTrackObject } from "../../../types/TrackTypes";
 import { TrackRow } from "../../SpotifySong/TrackRow";
 import { useEffect } from "react";
+import { LoadingSpinner } from "../../../assets/LoadingSpinner";
 
 export const LikedSongs = () => {
 
     const { setRefreshQueue } = useQueue();
-    const { likedSongs, setOffset } = useLikedSongs();
+    const { isLoading, likedSongs, setOffset } = useLikedSongs();
 
     const playTrack = async (trackURI : string) => {
         await play("", likedSongs?.items.map(trackObject => trackObject.track.uri), trackURI);
@@ -40,7 +41,9 @@ export const LikedSongs = () => {
                     playTrack={playTrack} 
                     mode={'playlist'}/>
                 ) }
-            
+                <div className={`flex justify-center items-center ${isLoading ? "m-4" : ""}`}>
+                    {isLoading ? <LoadingSpinner /> : <></>}
+                </div>
             </div>
         </div>
     )

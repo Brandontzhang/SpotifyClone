@@ -7,6 +7,7 @@ import { usePlaylistTracks } from "../../hooks/usePlaylistTracks";
 import { useParams } from "react-router-dom";
 import { useQueue } from "../../hooks/useQueue";
 import { play } from "../../service/SpotifyApiService";
+import { LoadingSpinner } from "../../assets/LoadingSpinner";
 
 export const PlaylistView = () => {
 
@@ -16,7 +17,7 @@ export const PlaylistView = () => {
     const [playlistId, setPlaylistId] = useState<string>();
     const [ trackData, setTrackData ] = useState<PlaylistTrackObject[]>([]);
     const { savedTracks } = usePlaylistSavedTracks(trackData);
-    const { playlistTracks } = usePlaylistTracks(playlistId);
+    const { playlistTracks, setOffset, isLoading } = usePlaylistTracks(playlistId);
     const { setRefreshQueue } = useQueue();
 
     useEffect(() => {
@@ -38,8 +39,16 @@ export const PlaylistView = () => {
         setRefreshQueue((refresh : boolean) => !refresh);
     }
 
+    const handleScroll = (event : any) => {
+        const target = event.target;
+        
+        if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+            setOffset(offset => offset + 20);
+        }
+    }
+
     return (
-        <div className="max-h-full overflow-y-scroll">
+        <div className="max-h-full overflow-y-scroll" onScroll={handleScroll}>
             <div className="flex flex-col">
                 {trackData.map((trackItem : PlaylistTrackObject, index : number) => 
                     <TrackRow 
@@ -51,6 +60,9 @@ export const PlaylistView = () => {
                         playTrack={playTrack} 
                         mode={'playlist'}/>
                 )}
+                <div className={`flex justify-center items-center ${isLoading ? "m-4" : ""}`}>
+                    {isLoading ? <LoadingSpinner /> : <></>}
+                </div>
             </div>
         </div>
     )

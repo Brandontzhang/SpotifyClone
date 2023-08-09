@@ -35,8 +35,8 @@ export const getSavedTracks = async () => {
     return data;
 }
 
-export const fetchPlaylistData = async (playlistId : string) : Promise<TrackPage> => {
-    const response = await fetch(`http://localhost:5000/playlist/${playlistId}/tracks`)
+export const fetchPlaylistData = async (playlistId : string, offset : number) : Promise<TrackPage> => {
+    const response = await fetch(`http://localhost:5000/playlist/${playlistId}/tracks/${offset}`)
     const data = await response.json();
 
     return data;

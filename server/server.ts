@@ -222,8 +222,9 @@ app.get('/me/tracks/:offset', (req : Request, res : Response) => {
 /**
  * Get the songs associated with the playlist id provided
  */
-app.get('/playlist/:playlistid/tracks', (req : Request, res : Response) => {
-    request.get(getSpotifyAPIAuthOptions(`v1/playlists/${req.params.playlistid}/tracks?offset=0&limit=50`), function(error, response, body) {
+app.get('/playlist/:playlistid/tracks/:offset', (req : Request, res : Response) => {
+    let offset = req.params.offset;
+    request.get(getSpotifyAPIAuthOptions(`v1/playlists/${req.params.playlistid}/tracks?offset=${offset}&limit=20`), function(error, response, body) {
         if (!error && response.statusCode === 200) {
             res.send(body);
         } else {

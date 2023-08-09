@@ -11,6 +11,12 @@ export const useLikedSongs = () => {
     const fetchData = async () => {
         try {
             const newData : TrackPage = await getLikedSongs(offset);
+
+            setIsLoading(false);
+            if (newData.items.length === 0) {
+                setOffset(-1);
+                return;
+            }
             setLikedSongs(prevLikedSongs => {
 
                 if (!prevLikedSongs) {
@@ -30,7 +36,6 @@ export const useLikedSongs = () => {
 
                 return combinedLikedSongs;
             });
-            setIsLoading(false);
         } catch (error : any) {
             setServerError(error);
             setIsLoading(false);
@@ -38,6 +43,9 @@ export const useLikedSongs = () => {
     }
 
     useEffect(() => {
+        if (offset === -1) {
+            return;
+        }
         setIsLoading(true);
         fetchData();
     }, [offset]);
