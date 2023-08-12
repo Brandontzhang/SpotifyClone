@@ -148,7 +148,7 @@ app.get('/logout', (_req : Request, res : Response) => {
  * Play array of songs given
  */
 app.put('/me/player/play', (req : Request, res : Response) => {
-    let contextURI = req.body.context; // playlist, artists, or albums
+    let contextURI = req.body.contextURI; // playlist, artists, or albums
     let uris = req.body.uris; // tracks to play
     let offset = req.body.offset; // track to start at
 
@@ -157,13 +157,13 @@ app.put('/me/player/play', (req : Request, res : Response) => {
     if (contextURI != "") {
         body = {
             context_uri : contextURI,
-            uris : uris,
             offset : {"uri" : offset},
             position_ms : 0
         }
     } else {
         body = {
             uris : uris,
+            offset : {"uri" : offset},
         }
     }
 
@@ -172,12 +172,11 @@ app.put('/me/player/play', (req : Request, res : Response) => {
         body : body
     }
 
-    request.put(authOptions, function(error, response) {
+    request.put(authOptions, function(error, response, _body) {
         if (!error && response.statusCode === 202) {
             res.sendStatus(200);
         } else {
             if (response) {
-                console.log(response);
                 res.sendStatus(response.statusCode);
             } else {
                 res.send(error);
@@ -349,6 +348,26 @@ app.get('/search/:query/:type', (req : Request, res : Response) => {
         }
     })
 });
+
+/**
+ * Send request to get recommendations
+ */
+app.put('/recommendations', (req : Request, res : Response) => {
+    const seed_tracks = req.body.seed_tracks;
+
+    request.get(getSpotifyAPIAuthOptions(`v1/recommendations?seed_tracks=${seed_tracks.join(",")}`), function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            res.send(body);
+        } else {
+            if (response) {
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+});
+
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)

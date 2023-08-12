@@ -7,6 +7,7 @@ import { Playlist, SimplifiedPlaylistObject } from "../../types/PlaylistTypes";
 import { useState } from "react";
 import { SearchResults } from "../SearchResults/SearchResults";
 import { LikedSongs } from "../SpotifyPlaylist/LikedSongs/LikedSongs";
+import { RecommendationsList } from "../SpotifyPlaylist/Recommendations/RecommendationsList";
 
 export const MainContent = () => {
 
@@ -21,6 +22,7 @@ export const MainContent = () => {
                             <Route path="/search/:query" element={<SearchResults />} />
                             <Route path="/playlist/:playlistId" element={<PlaylistView />} />
                             <Route path="/playlist/likedsongs" element={<LikedSongs />} />
+                            <Route path="/recommendations" element={<RecommendationsList />} />
                         </Routes>
                 </PlaylistContext.Provider>
             </div>

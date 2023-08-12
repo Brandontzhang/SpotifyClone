@@ -6,7 +6,7 @@ import { ProgressPlayButton } from "./ProgressPlayButton";
 import { VolumeBar } from "./VolumeBar";
 import { Forward, Rewind } from "../../assets";
 import { TokenContext } from "../../context/TokenContext";
-import { setRepeat } from "../../service/SpotifyApiService";
+import { setRepeat, transferPlayback } from "../../service/SpotifyApiService";
 
 export const PlayBar = () => {
 
@@ -45,16 +45,12 @@ export const PlayBar = () => {
     useEffect(() => {
       if (playerDevice?.device_id === undefined) return;
 
-      fetch(`https://api.spotify.com/v1/me/player`, {
-        method: "PUT",
-        body: JSON.stringify({ device_ids: [playerDevice.device_id], play: false }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (playerDevice.status === 'ready') {
+        console.log(playerDevice.device_id);
+        transferPlayback(token, playerDevice.device_id);
+      }
 
-    }, [playerDevice?.device_id]);
+    }, [playerDevice?.status]);
 
     // Volume 
     useEffect(() => {

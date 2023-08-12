@@ -4,6 +4,7 @@ import { addToQueue } from "../../service/SpotifyApiService";
 import { PiQueueFill } from 'react-icons/pi/index';
 import { useContext } from "react";
 import { QueueContext } from "../../context/QueueContext";
+import { BuildPlaylistContext } from "../../context/BuildPlaylistContext";
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
@@ -13,6 +14,7 @@ export const TrackRow = (props : any) => {
     const { setRefreshQueue, mode } = props;
 
     const { currentlyPlaying } = useContext(QueueContext);
+    const { setSeedTracks } = useContext(BuildPlaylistContext);
 
     const getArtists = () => {
         let artists = track.artists;
@@ -63,6 +65,11 @@ export const TrackRow = (props : any) => {
         addToQueue(track.uri);
     }
 
+    const addToSeedTracks = (e : any) => {
+        e.stopPropagation();
+        setSeedTracks([track]);
+    }
+
     return (
         <div className={`${currentlyPlaying?.id == track.id ? 'text-highlight' : 'text-primary'} grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer`} key={track.id} onClick={() => playTrack(track.uri)}>
             <div className="flex flex-col col-span-4">
@@ -81,6 +88,7 @@ export const TrackRow = (props : any) => {
             <div className="flex flex-row col-span-1 items-center justify-center">
                 {mode == 'playlist' ? saved ? <span className="fill-highlight"><Heart /></span> : <></> : <></>}
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><PiQueueFill /></span>
+                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}>+</span>
             </div> 
             <div className="flex flex-row col-span-1 items-center justify-center">
                 <span className="text-primary text-xl">{getDuration()}</span>

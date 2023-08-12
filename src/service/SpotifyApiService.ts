@@ -102,3 +102,38 @@ export const search = async (query : string, types : string[]) : Promise<any> =>
     
     return data;
 }
+
+export const buildRecommendations = async (seedTracks : Track[]) : Promise<any> => {
+    const response = await fetch(`http://localhost:5000/recommendations`, {
+      method: "PUT",
+      mode: "cors", 
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body : JSON.stringify({seed_tracks : seedTracks.map(track => track.id)})
+    });
+
+
+    try {
+        const data = await response.json();
+
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log(response);
+    }
+
+}
+
+export const transferPlayback = async (token : string, deviceId : string) => {
+    const response = await fetch(`https://api.spotify.com/v1/me/player`, {
+        method: "PUT",
+        body: JSON.stringify({ device_ids: [deviceId], play: false }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
