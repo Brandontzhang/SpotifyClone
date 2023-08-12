@@ -8,7 +8,7 @@ type playlistContext = {
 
 const playlistDefaultValue : playlistContext = {
     playlist : {} as Playlist,
-    setPlaylist : (newPlaylist : Playlist | SimplifiedPlaylistObject) => {},
+    setPlaylist : (_newPlaylist : Playlist | SimplifiedPlaylistObject) => {},
 }
 
 export const PlaylistContext = createContext(playlistDefaultValue);

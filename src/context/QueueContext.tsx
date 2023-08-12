@@ -11,8 +11,8 @@ type queueContext = {
 const queueDefaultValue : queueContext = {
     currentlyPlaying : {} as Track,
     queue : [],
-    setCurrentlyPlaying : (newCP : Track) => {},
-    setQueue : (t : Track[]) => {},
+    setCurrentlyPlaying : (_newCP : Track) => {},
+    setQueue : (_t : Track[]) => {},
 }
 
 export const QueueContext = createContext(queueDefaultValue);

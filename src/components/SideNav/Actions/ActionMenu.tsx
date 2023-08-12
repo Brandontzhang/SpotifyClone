@@ -23,9 +23,9 @@ export const ActionMenu = () => {
 
     useEffect(() => {
         if (searchFocus) {
-            searchRef.current?.focus()
+            searchRef.current?.focus();
         }
-    }, [searchFocus]);
+    }, [searchFocus, query]);
 
     const sendQuery = async (event : any) => {
         event.preventDefault();
@@ -37,8 +37,8 @@ export const ActionMenu = () => {
         // Set focus of bar
         searchRef?.current?.blur();
         setSearchFocus(false);
-        
-        navigate("/search");
+
+        navigate(`/search/${query}`);
     }
 
     const processResults = (searchResults : any) => {

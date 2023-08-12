@@ -18,7 +18,7 @@ export const MainContent = () => {
                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
                         <Routes>
                             <Route path="/" element={<Playlists/>} />
-                            <Route path="/search" element={<SearchResults />} />
+                            <Route path="/search/:query" element={<SearchResults />} />
                             <Route path="/playlist/:playlistId" element={<PlaylistView />} />
                             <Route path="/playlist/likedsongs" element={<LikedSongs />} />
                         </Routes>

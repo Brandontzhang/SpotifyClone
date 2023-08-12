@@ -4,18 +4,37 @@ import { TrackResults } from "./TrackResults";
 import { ArtistResults } from "./ArtistResults";
 import { AlbumResults } from "./AlbumResults";
 import { PlaylistResults } from "./PlaylistResults";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { search } from "../../service/SpotifyApiService";
 
 export const SearchResults = () => {
 
-    const { tracks } = useContext(SearchResultsContext);
+    const { tracks, searchTypes, setTrackResults, setAlbumResults, setArtistResults, setPlaylistResults } = useContext(SearchResultsContext);
 
     const [mode, setMode] = useState('tracks');
     const navigate = useNavigate();
+    const { query } = useParams();
+    
+    const processResults = (searchResults : any) => {
+        setTrackResults(searchResults.tracks);
+        setAlbumResults(searchResults.albums);
+        setArtistResults(searchResults.artists);
+        setPlaylistResults(searchResults.playlists);
+    }
+
+    const processQuery = async () => {
+        if (query) {
+            const searchResults = await search(query, searchTypes);
+            processResults(searchResults);
+        }
+        
+    }
 
     useEffect(() => {
-        if (!tracks) {
-            navigate("/");
+        if (!query) {
+            navigate('/');
+        } else if (!tracks) {
+           processQuery();
         }
     }, [tracks]);
 

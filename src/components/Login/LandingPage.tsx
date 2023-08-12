@@ -20,17 +20,23 @@ export const LandingPage = () => {
     const [albums, setAlbumResults] = useState<AlbumResults>();
     const [artists, setArtistResults] = useState<ArtistResults>();
     const [playlists, setPlaylistResults] = useState<PlaylistResults>();
+    const [query, setQuery] = useState<string>("");
+    const [searchTypes, setSearchTypes] = useState(['track', 'artist', 'album', 'playlist']);
 
     const searchContextValue = {
+        query : query,
         tracks : tracks,
         albums : albums,
         artists : artists,
         playlists : playlists,
+        searchTypes : searchTypes,
 
         setTrackResults : setTrackResults,
         setAlbumResults : setAlbumResults,
         setArtistResults : setArtistResults,
-        setPlaylistResults : setPlaylistResults
+        setPlaylistResults : setPlaylistResults,
+        setQuery : setQuery,
+        setSearchTypes : setSearchTypes
     }
 
     const getOAuthToken = async() => {
