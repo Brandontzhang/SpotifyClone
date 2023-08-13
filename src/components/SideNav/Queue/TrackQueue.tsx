@@ -18,7 +18,7 @@ export const TrackQueue = () => {
     const { buildRecs } = useBuildRecommendations();
 
     return (
-        <div className="grid grid-rows-12">
+        <div className="grid grid-rows-12 h-full">
             {mode === 'queue' ?
                 <div className="row-span-1 grid grid-cols-5 justify-around items-center p-5 w-full h-full">
                     <span className="text-primary text-4xl"><MdOutlineQueueMusic /></span>

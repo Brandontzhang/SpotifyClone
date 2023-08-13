@@ -8,14 +8,16 @@ import { useState } from "react";
 import { SearchResults } from "../SearchResults/SearchResults";
 import { LikedSongs } from "../SpotifyPlaylist/LikedSongs/LikedSongs";
 import { RecommendationsList } from "../SpotifyPlaylist/Recommendations/RecommendationsList";
+import { Navbar } from "./Navbar";
 
 export const MainContent = () => {
-
     const [playlist, setPlaylist] = useState<Playlist | SimplifiedPlaylistObject>({} as Playlist);
     
     return (
         <div className="h-full flex-col justify-between">
-            <div className="h-[80%] max-h-[70vh]">
+            <Navbar />
+
+            <div className="h-[68vh] m-4">
                 <PlaylistContext.Provider value={{playlist, setPlaylist}}>
                         <Routes>
                             <Route path="/" element={<Playlists/>} />
@@ -26,7 +28,8 @@ export const MainContent = () => {
                         </Routes>
                 </PlaylistContext.Provider>
             </div>
-            <div className="flex justify-center items-center h-[28%]">
+
+            <div className="flex justify-center items-center h-[20vh]">
                 <PlayBar />
             </div>
         </div>

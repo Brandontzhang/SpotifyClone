@@ -90,7 +90,7 @@ export const PlayBar = () => {
   }
 
     return (
-        <div className="grid grid-cols-12 m-4 rounded-lg w-full bg-background100">
+        <div className="grid grid-cols-12 m-2 rounded-lg w-full bg-background100">
           <div className="col-span-6 lg:col-span-4 sm:col-span-8 flex flex-row justify-center items-center w-full p-5">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
             <div className="p-5 overflow-hidden">

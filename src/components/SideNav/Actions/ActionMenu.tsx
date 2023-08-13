@@ -1,11 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AiFillHome } from "react-icons/ai"
+import { AiFillHome, AiOutlineMenuFold } from "react-icons/ai"
 import { BiSearch, BiSolidSearch } from "react-icons/bi"
 import { TbCircleArrowLeft, TbCircleArrowRight } from "react-icons/tb"
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { search } from "../../../service/SpotifyApiService";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchResultsContext } from "../../../context/SearchResultsContext";
+import { TokenContext } from "../../../context/TokenContext";
 
 export const ActionMenu = () => {
 
@@ -17,6 +18,8 @@ export const ActionMenu = () => {
     // Data to be sent as search params
     const [query, setQuery] = useState("");
     const searchResultTypes = ['track', 'artist', 'album', 'playlist'];
+
+    const { setSideNav } = useContext(TokenContext);
 
     const { setTrackResults, setAlbumResults, setArtistResults, setPlaylistResults } = useContext(SearchResultsContext);
     const navigate = useNavigate();
@@ -59,6 +62,7 @@ export const ActionMenu = () => {
                     <div className="flex flex-row">
                         <span className="p-2 hover:text-highlight hover:cursor-pointer" onClick={() => navigate(-1)}><TbCircleArrowLeft /></span>
                         <span className="p-2 hover:text-highlight hover:cursor-pointer" onClick={() => navigate(1)}><TbCircleArrowRight /></span>
+                        <span className="block md:hidden p-2 hover:text-highlight hover:cursor-pointer" onClick={() => setSideNav(false)}><AiOutlineMenuFold /></span>
                     </div>
                 </div>
                 <div>

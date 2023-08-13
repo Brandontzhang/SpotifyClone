@@ -11,6 +11,15 @@ export const LandingPage = () => {
 
     // Token Context
     const [token, setToken] = useState('');
+    const [sideNav, setSideNav] = useState(false);
+
+    const tokenContextValue = {
+        sideNav : sideNav,
+        setSideNav : setSideNav,
+
+        token : token, 
+        setToken : setToken
+    }
 
     // Queue Context
     const [currentlyPlaying, setCurrentlyPlaying] = useState<Track>();
@@ -92,7 +101,7 @@ export const LandingPage = () => {
         <BuildPlaylistContext.Provider value={buildPlaylistContextValue}>
             <SearchResultsContext.Provider value={searchContextValue}>
                 <QueueContext.Provider value={{currentlyPlaying : currentlyPlaying, queue : queue, setCurrentlyPlaying : setCurrentlyPlaying, setQueue : setQueue}}>
-                    <TokenContext.Provider value={{token : token, setToken : setToken}}>
+                    <TokenContext.Provider value={tokenContextValue}>
                         <div className="bg-background300 h-screen">
                             { (token === '') ? <LoginPage /> : <MainPage />}
                         </div>
