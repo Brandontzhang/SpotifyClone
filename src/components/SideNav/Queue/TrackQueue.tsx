@@ -18,7 +18,7 @@ export const TrackQueue = () => {
     const { buildRecs } = useBuildRecommendations();
 
     return (
-        <div className="grid grid-rows-12 h-full">
+        <div className="grid grid-rows-6 h-full">
             {mode === 'queue' ?
                 <div className="row-span-1 grid grid-cols-5 justify-around items-center p-5 w-full h-full">
                     <span className="text-primary text-4xl"><MdOutlineQueueMusic /></span>
@@ -34,18 +34,19 @@ export const TrackQueue = () => {
                 </div> 
             }
             
-            {mode === 'queue' ?
-                <div className="row-auto overflow-y-scroll max-h-[70vh]">
+            {
+                mode === 'queue' ?
+                <div className="row-span-5 overflow-y-scroll max-h-[65vh]">
                     { queue.map((track : Track, index : number) => <QueueItem key={index} track={track} />) }
                 </div> :
-                <div className="row-auto overflow-y-scroll max-h-[70vh]">
+                <div className="row-span-4 overflow-y-scroll max-h-[65vh]">
                     { seedTracks.map((track : Track, index : number) => <QueueItem key={index} track={track} mode={mode} />) }
                 </div>
             }     
 
             {
                 mode === 'build' ? 
-                <div className="flex justify-center my-12 w-full text-primary text-xl">
+                <div className="row-span-1 flex justify-center w-full text-primary text-xl">
                     <Link to={'/recommendations'}>
                         {recTracks.length > 0 ? 
                             <span className="mx-4 p-2 h-fit w-fit border border-primary rounded-xl hover:cursor-pointer hover:border-highlight hover:text-highlight duration-300">
