@@ -3,7 +3,7 @@ import { TrackQueue } from "./Queue/TrackQueue"
 
 export const SideNav = () => {
     return (
-        <div className="h-full grid grid-cols-1 grid-rows-6 gap-4">
+        <div className="h-full hidden sm:grid grid-cols-1 grid-rows-6 gap-4 ">
             <div className="row-span-1 bg-background200 rounded-lg">
                 <ActionMenu />
             </div>

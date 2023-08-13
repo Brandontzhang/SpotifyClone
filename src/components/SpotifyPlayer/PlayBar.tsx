@@ -7,6 +7,8 @@ import { VolumeBar } from "./VolumeBar";
 import { Forward, Rewind } from "../../assets";
 import { TokenContext } from "../../context/TokenContext";
 import { setRepeat, transferPlayback } from "../../service/SpotifyApiService";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { RiPlayListAddLine } from "react-icons/ri";
 
 export const PlayBar = () => {
 
@@ -26,6 +28,7 @@ export const PlayBar = () => {
     const [artists, setArtists] = useState<{name : string, uri : string, url : string}[]>([]);
 
     const [volume, setVolume] = useState(0.5);
+    const [saved, setSaved] = useState(false);
 
     const { token } = useContext(TokenContext);
 
@@ -78,35 +81,47 @@ export const PlayBar = () => {
     if (!webPlaybackSDKReady || !player) return <div>Loading...</div>;
 
     // TODO : Fix spacing on smaller screens
+    const saveToLiked = (e : any) => {
+      e.preventDefault();
+    }
+
+    const addToSeedTracks = (e : any) => {
+      e.stopPropagation();
+  }
 
     return (
-        <div className="flex basis-0 justify-between items-center rounded-lg min-w-fit w-4/6 bg-background100">
-          <div className="flex flex-row justify-center items-center w-[400px] p-5">
+        <div className="grid grid-cols-12 m-4 rounded-lg w-full bg-background100">
+          <div className="col-span-6 lg:col-span-4 sm:col-span-8 flex flex-row justify-center items-center w-full p-5">
             <img className="h-[128px] w-[128px] rounded-lg" src={image}></img>
-            <div className="p-5">
-              <span className="text-primary text-xl font-bold">{title}</span>
-              <div>
+            <div className="p-5 overflow-hidden">
+              <p className="text-primary text-xl font-bold whitespace-nowrap text-ellipsis">{title}</p>
+              <div className="whitespace-nowrap">
                 {artists.map((artist, index) => <span key={index} className="text-primary pr-3">{artist.name}</span>)}
               </div>
             </div>
           </div>
 
-          <div className="flex justify-center items-end w-[700px] p-5">
-            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(-10)}><Rewind/></button>
-            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
+          <div className="col-span-6 lg:col-span-4 sm:col-span-4 flex justify-center items-end w-full p-5">
+            <button className="text-primary lg:block hidden p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(-10)}><Rewind/></button>
+            <button className="text-primary md:block hidden p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.previousTrack()}><RxTrackPrevious /></button>
             <div className="flex flex-col items-center">
               <ProgressPlayButton progressBarClassName="stroke-highlight" size={250} strokeWidth={10} percentage={percentage} > 
                 <button className="text-primary text-7xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.togglePlay()}>{playbackState?.paused ? <CiPlay1 /> : <CiPause1 />}</button>
               </ProgressPlayButton>
               <span className="text-primary text-xs pt-5">{convertMSToMin(currentTime)}/{convertMSToMin(duration)}</span>
             </div>
-            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
-            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(10)}><Forward/></button>
-            <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => setRepeat("track")}>R</button>
+            <button className="text-primary md:block hidden p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => player.nextTrack()}><RxTrackNext /></button>
+            <button className="text-primary lg:block hidden p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => shiftTime(10)}><Forward/></button>
           </div>
 
-          <div className="flex justify-center items-center w-[300px] p-5">
+          <div className="lg:col-span-4 hidden lg:flex flex-col justify-center items-center w-full p-5">
+            <div className="flex flex-row">
+              <button className="text-highlight p-5 text-3xl">{saved ? <AiFillHeart /> : <span onClick={(e) => saveToLiked(e)}><AiOutlineHeart /></span>}</button>
+              <button className="text-primary p-5 text-3xl transition ease-in-out hover:text-highlight duration-300" onClick={() => setRepeat("track")}>R</button>
+              <span className="text-primary text-3xl p-5 pt-6 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}><RiPlayListAddLine /></span>
+            </div>
             <VolumeBar initialVolume={volume} setVolume={setVolume} />
+            
           </div>
         </div>
     )

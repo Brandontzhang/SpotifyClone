@@ -79,25 +79,25 @@ export const TrackRow = (props : any) => {
 
     return (
         <div className={`${currentlyPlaying?.id == track.id ? 'text-highlight' : 'text-primary'} grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer`} key={track.id} onClick={() => playTrack(track.uri)}>
-            <div className="flex flex-col col-span-4">
-                <span className="text-xl">{track.name}</span>
+            <div className="col-span-6 lg:col-span-4 flex flex-col overflow-hidden mx-2">
+                <span className="text-xl whitespace-nowrap">{track.name}</span>
                 <span>{getArtists()}</span>
             </div>
-            <div className="flex flex-col col-span-2 justify-center">
-                <span className="text-primary text-xl">{track.album.name}</span>
+            <div className="hidden lg:col-span-2 lg:flex flex-col justify-center overflow-hidden mx-4">
+                <span className="text-primary text-xl whitespace-nowrap">{track.album.name}</span>
             </div>
             {mode == 'playlist' ? 
-                <div className="flex flex-col col-span-2 justify-center">
+                <div className="hidden lg:col-span-2 lg:flex flex-col justify-center">
                     <span className="text-primary text-xl">{getAddedAtDisplay()}</span>
                 </div> :
-                <div className="col-span-2"></div>
+                <div className="hidden lg:col-span-2"></div>
             }
-            <div className="flex flex-row col-span-1 items-center justify-center">
+            <div className="flex flex-row col-span-2 lg:col-span-1 items-center justify-center">
                 <span className="text-highlight text-3xl">{mode == 'playlist' ? saved ? <AiFillHeart /> : <span onClick={(e) => saveToLiked(e)}><AiOutlineHeart /></span> : <></>}</span>
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><RiPlayListFill /></span>
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}><RiPlayListAddLine /></span>
             </div> 
-            <div className="flex flex-row col-span-1 items-center justify-center">
+            <div className="flex flex-row col-span-2 lg:col-span-1 items-center justify-center">
                 <span className="text-primary text-xl">{getDuration()}</span>
             </div>
         </div>
