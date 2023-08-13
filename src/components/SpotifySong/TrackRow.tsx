@@ -1,7 +1,7 @@
 import { Track } from "../../types/TrackTypes"
 import { Heart } from "../../assets";
 import { addToQueue } from "../../service/SpotifyApiService";
-import { PiQueueFill } from 'react-icons/pi/index';
+import { RiPlayListFill, RiPlayListAddLine } from 'react-icons/ri';
 import { useContext } from "react";
 import { QueueContext } from "../../context/QueueContext";
 import { BuildPlaylistContext } from "../../context/BuildPlaylistContext";
@@ -14,7 +14,7 @@ export const TrackRow = (props : any) => {
     const { setRefreshQueue, mode } = props;
 
     const { currentlyPlaying } = useContext(QueueContext);
-    const { setSeedTracks } = useContext(BuildPlaylistContext);
+    const { setSeedTracks, setMode } = useContext(BuildPlaylistContext);
 
     const getArtists = () => {
         let artists = track.artists;
@@ -68,6 +68,7 @@ export const TrackRow = (props : any) => {
     const addToSeedTracks = (e : any) => {
         e.stopPropagation();
         setSeedTracks([track]);
+        setMode('build');
     }
 
     return (
@@ -87,8 +88,8 @@ export const TrackRow = (props : any) => {
             }
             <div className="flex flex-row col-span-1 items-center justify-center">
                 {mode == 'playlist' ? saved ? <span className="fill-highlight"><Heart /></span> : <></> : <></>}
-                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><PiQueueFill /></span>
-                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}>+</span>
+                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><RiPlayListFill /></span>
+                <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}><RiPlayListAddLine /></span>
             </div> 
             <div className="flex flex-row col-span-1 items-center justify-center">
                 <span className="text-primary text-xl">{getDuration()}</span>

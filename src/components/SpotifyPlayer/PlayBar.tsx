@@ -46,7 +46,6 @@ export const PlayBar = () => {
       if (playerDevice?.device_id === undefined) return;
 
       if (playerDevice.status === 'ready') {
-        console.log(playerDevice.device_id);
         transferPlayback(token, playerDevice.device_id);
       }
 

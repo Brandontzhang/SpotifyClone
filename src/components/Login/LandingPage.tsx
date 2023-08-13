@@ -41,11 +41,16 @@ export const LandingPage = () => {
     }
 
     // Build Playlist context
+    const [mode, setMode] = useState("queue");
     const [recTracks, setRecTracks] = useState<Track[]>([]);
     const [seedTracks, setSeedTracks] = useState<Track[]>([]);
     const setSeedTracksLessThanSeedLimit = (newTracks : Track[]) => {
         let limit : number = 5; // Spotify limits number of seed tracks
-        setSeedTracks(tracks => {
+        setSeedTracks((tracks : Track[]) => {
+
+            // Prevent exisiting tracks from being added
+            newTracks = newTracks.filter(track => tracks.find(t => t.id === track.id) ? false : true);
+
             if (tracks.length + newTracks.length <= limit) {
                 return [...tracks, ...newTracks];
             } else {
@@ -58,11 +63,18 @@ export const LandingPage = () => {
         })
     }
 
+    const removeSeedTrack = (removeTracks : Track[]) => {
+        setSeedTracks((tracks : Track[]) => tracks.filter(t => removeTracks.find(rt => rt.id === t.id) ?  false : true))
+    }
+
     const buildPlaylistContextValue = {
+        mode : mode,
         seedTracks : seedTracks, 
         recTracks : recTracks,
+        setMode : setMode,
         setSeedTracks : setSeedTracksLessThanSeedLimit,
-        setRecTracks : setRecTracks
+        setRecTracks : setRecTracks,
+        removeSeedTracks : removeSeedTrack
     }
 
     const getOAuthToken = async() => {
