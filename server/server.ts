@@ -53,6 +53,7 @@ app.get('/auth/login', (_req : Request, res : Response) => {
     var scope = "streaming \
                user-read-email \
                user-read-private \
+               user-library-modify \
                user-library-read \
                user-read-playback-state \
                user-modify-playback-state \
@@ -367,6 +368,31 @@ app.put('/recommendations', (req : Request, res : Response) => {
         }
     })
 });
+
+/**
+ * Save tracks to user
+ */
+app.put('/me/tracks', (req : Request, res : Response) => {
+    let authOptions = {
+        ...getSpotifyAPIAuthOptions(`v1/me/tracks`),
+        body : {
+            ids : req.body.ids
+        }
+    }
+
+    request.put(authOptions, function(error, response, _body) {
+        if (!error && response.statusCode === 200) {
+            res.sendStatus(200);
+        } else {
+            if (response) {
+                console.log(response.statusCode);
+                res.sendStatus(response.statusCode);
+            } else {
+                res.send(error);
+            }
+        }
+    })
+})
 
 
 app.listen(port, () => {

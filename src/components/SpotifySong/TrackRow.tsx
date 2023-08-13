@@ -1,16 +1,16 @@
 import { Track } from "../../types/TrackTypes"
-import { Heart } from "../../assets";
-import { addToQueue } from "../../service/SpotifyApiService";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { addToQueue, saveTrack } from "../../service/SpotifyApiService";
 import { RiPlayListFill, RiPlayListAddLine } from 'react-icons/ri';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { QueueContext } from "../../context/QueueContext";
 import { BuildPlaylistContext } from "../../context/BuildPlaylistContext";
 
 export const TrackRow = (props : any) => {
     const track : Track = props.track;
-    const saved : boolean = props.saved;
     const addedAt : string = props.addedAt;
     const playTrack = props.playTrack;
+    const [saved, setSaved] = useState(props.saved);
     const { setRefreshQueue, mode } = props;
 
     const { currentlyPlaying } = useContext(QueueContext);
@@ -71,6 +71,12 @@ export const TrackRow = (props : any) => {
         setMode('build');
     }
 
+    const saveToLiked = (e : any) => {
+        e.stopPropagation();
+        saveTrack(track);
+        setSaved(true);
+    }
+
     return (
         <div className={`${currentlyPlaying?.id == track.id ? 'text-highlight' : 'text-primary'} grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer`} key={track.id} onClick={() => playTrack(track.uri)}>
             <div className="flex flex-col col-span-4">
@@ -87,7 +93,7 @@ export const TrackRow = (props : any) => {
                 <div className="col-span-2"></div>
             }
             <div className="flex flex-row col-span-1 items-center justify-center">
-                {mode == 'playlist' ? saved ? <span className="fill-highlight"><Heart /></span> : <></> : <></>}
+                <span className="text-highlight text-3xl">{mode == 'playlist' ? saved ? <AiFillHeart /> : <span onClick={(e) => saveToLiked(e)}><AiOutlineHeart /></span> : <></>}</span>
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addQueueClick(e)}><RiPlayListFill /></span>
                 <span className="text-primary text-3xl px-1 hover:text-highlight" onClick={(e) => addToSeedTracks(e)}><RiPlayListAddLine /></span>
             </div> 

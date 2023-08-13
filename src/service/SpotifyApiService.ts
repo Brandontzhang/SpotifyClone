@@ -137,3 +137,19 @@ export const transferPlayback = async (token : string, deviceId : string) => {
 
     return response;
 }
+
+export const saveTrack = async (track : Track) => {
+    let id = track.id;
+
+    const response = await fetch(`http://localhost:5000/me/tracks`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            ids : [id]
+        }),
+    });
+
+    return response;
+}
