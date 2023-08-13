@@ -34,7 +34,7 @@ const Playlists = () => {
         <div className="h-[100%] overflow-y-scroll">
             <div>
                 <span className="text-primary p-4 text-3xl">{greeting}</span>
-                <div className="grid grid-cols-4"> 
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6"> 
                     <div className={`${isLoading} load`}>
                         <PlaylistCard playlist={discoverWeekly}/>
                     </div>
@@ -46,7 +46,7 @@ const Playlists = () => {
             
             <div>
                 <span className="text-primary p-4 text-3xl">Your Playlists</span>
-                <div className="grid grid-cols-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
                     { playlists?.map((pl : Playlist) => 
                         <PlaylistCard key={pl.snapshot_id} playlist={pl} />
                     ) }
