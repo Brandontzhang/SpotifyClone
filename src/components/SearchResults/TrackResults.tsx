@@ -29,10 +29,10 @@ export const TrackResults = () => {
                 <div className="col-span-4">
                     Name / Artist
                 </div>
-                <div className="col-span-2 pl">
+                <div className="hidden lg:block lg:col-span-4 pl-4">
                     Album
                 </div>
-                <div className="col-span-3"></div>
+                <div className="col-span-5 lg:col-span-1"></div>
                 <div className="flex col-span-1 items-center justify-center">
                     Duration
                 </div>

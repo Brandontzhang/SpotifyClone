@@ -24,10 +24,10 @@ export const MainPage = () => {
                 connectOnInitialized={true}
                 initialVolume={initialVolume}>
                     <div className="grid grid-cols-12 h-full">
-                        <div className="col-span-auto sm:col-span-2 m-2 mr-0 rounded-lg">
+                        <div className="col-span-auto md:col-span-2 m-2 mr-0 rounded-lg">
                             <SideNav />
                         </div>
-                        <div className="col-span-12 sm:col-span-10 bg-background200 m-2 rounded-lg">
+                        <div className="col-span-12 md:col-span-10 bg-background200 m-2 rounded-lg">
                             <MainContent />
                         </div>
                     </div>            

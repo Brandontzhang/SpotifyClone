@@ -2,7 +2,7 @@ import { Track } from "../../types/TrackTypes"
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { addToQueue, saveTrack } from "../../service/SpotifyApiService";
 import { RiPlayListFill, RiPlayListAddLine } from 'react-icons/ri';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { QueueContext } from "../../context/QueueContext";
 import { BuildPlaylistContext } from "../../context/BuildPlaylistContext";
 
@@ -76,7 +76,7 @@ export const TrackRow = (props : any) => {
         saveTrack(track);
         setSaved(true);
     }
-
+    
     return (
         <div className={`${currentlyPlaying?.id == track.id ? 'text-highlight' : 'text-primary'} grid grid-cols-10 bg-background100 m-2 p-2 px-8 rounded-lg hover:cursor-pointer`} key={track.id} onClick={() => playTrack(track.uri)}>
             <div className="col-span-6 lg:col-span-4 flex flex-col overflow-hidden mx-2">
@@ -86,11 +86,11 @@ export const TrackRow = (props : any) => {
             <div className="hidden lg:col-span-2 lg:flex flex-col justify-center overflow-hidden mx-4">
                 <span className="text-primary text-xl whitespace-nowrap">{track.album.name}</span>
             </div>
-            {mode == 'playlist' ? 
+            {mode === 'playlist' ? 
                 <div className="hidden lg:col-span-2 lg:flex flex-col justify-center">
                     <span className="text-primary text-xl">{getAddedAtDisplay()}</span>
                 </div> :
-                <div className="hidden lg:col-span-2"></div>
+                <div className="hidden lg:block lg:col-span-2"></div>
             }
             <div className="flex flex-row col-span-2 lg:col-span-1 items-center justify-center">
                 <span className="text-highlight text-3xl">{mode == 'playlist' ? saved ? <AiFillHeart /> : <span onClick={(e) => saveToLiked(e)}><AiOutlineHeart /></span> : <></>}</span>
